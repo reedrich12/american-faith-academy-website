@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import AnimatedSection from '@/components/ui/animated-section';
 import { Card, CardContent } from '@/components/ui/card';
+import CalendarModal from '@/components/ui/calendar-modal';
 import { 
   Phone, 
   ChartBar, 
@@ -25,6 +26,7 @@ import {
 const GettingStartedSection = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [selectedModel, setSelectedModel] = useState<'church' | 'independent' | 'hybrid' | null>(null);
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
   const steps = [
     {
@@ -216,7 +218,7 @@ const GettingStartedSection = () => {
                             : '#e5e7eb',
                         boxShadow: index <= activeStep 
                           ? index === 4 
-                            ? '0 0 20px rgba(239, 68, 68, 0.6), 0 4px 6px rgba(0, 0, 0, 0.1)' 
+                            ? '0 0 10px rgba(239, 68, 68, 0.3), 0 2px 4px rgba(0, 0, 0, 0.1)' 
                             : '0 0 10px rgba(255, 255, 255, 0.3)'
                           : 'none',
                         backdropFilter: index < 4 && index <= activeStep ? 'blur(5px)' : 'none'
@@ -266,7 +268,7 @@ const GettingStartedSection = () => {
                     : '#f3f4f6',
                   boxShadow: index === activeStep 
                     ? index === 4 
-                      ? '0 0 20px rgba(239, 68, 68, 0.6), 0 4px 6px rgba(0, 0, 0, 0.1)' 
+                      ? '0 0 10px rgba(239, 68, 68, 0.3), 0 2px 4px rgba(0, 0, 0, 0.1)' 
                       : '0 0 10px rgba(255, 255, 255, 0.3)'
                     : 'none'
                 }}
@@ -305,44 +307,29 @@ const GettingStartedSection = () => {
 
         {/* Step Details Card */}
         <AnimatedSection>
-          <Card className={`mb-16 backdrop-blur-md ${
-                  activeStep === 4 
-                    ? 'bg-red-500/10 border-2 border-red-500/60' 
-                    : 'bg-transparent border-2 border-white/80'
-                }`}
+          <Card className="mb-16 backdrop-blur-md bg-transparent border-2 border-white/80"
                 style={{
-                  boxShadow: activeStep === 4
-                    ? '0 0 30px rgba(239, 68, 68, 0.5), 0 0 60px rgba(239, 68, 68, 0.3), inset 0 0 20px rgba(239, 68, 68, 0.1)'
-                    : '0 0 40px rgba(255, 255, 255, 0.5), inset 0 0 40px rgba(255, 255, 255, 0.1)'
+                  boxShadow: '0 0 40px rgba(255, 255, 255, 0.5), inset 0 0 40px rgba(255, 255, 255, 0.1)'
                 }}>
             <CardContent className="p-8">
               <div className="flex items-start gap-6 mb-6">
-                <div className={`w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0 ${
-                       activeStep === 4 ? '' : 'bg-transparent border-2 border-white/80'
-                     }`}
+                <div className="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0 bg-transparent border-2 border-white/80"
                      style={{
-                       background: activeStep === 4 
-                         ? 'linear-gradient(to right, #ef4444, #dc2626)'
-                         : 'transparent',
-                       boxShadow: activeStep === 4 
-                         ? '0 0 20px rgba(239, 68, 68, 0.6)'
-                         : '0 0 20px rgba(255, 255, 255, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1)',
-                       backdropFilter: activeStep === 4 ? 'none' : 'blur(5px)'
+                       boxShadow: '0 0 20px rgba(255, 255, 255, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1)',
+                       backdropFilter: 'blur(5px)'
                      }}>
                   {(() => { const Icon = steps[activeStep].icon; return <Icon className="w-8 h-8 text-white" style={{ filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 0.5))' }} />; })()}
                 </div>
                 <div className="flex-1">
                   <h3 className="text-2xl font-bold mb-2"
                       style={{
-                        color: activeStep === 4 ? '#ef4444' : 'white',
-                        textShadow: activeStep === 4 
-                          ? '0 0 10px rgba(239, 68, 68, 0.5)'
-                          : '0 0 10px rgba(255, 255, 255, 0.3)'
+                        color: 'white',
+                        textShadow: '0 0 10px rgba(255, 255, 255, 0.3)'
                       }}>
                     Step {steps[activeStep].id}: {steps[activeStep].title}
                   </h3>
-                  <p className="mb-1" style={{ color: activeStep === 4 ? '#fca5a5' : 'rgba(255, 255, 255, 0.9)' }}>{steps[activeStep].description}</p>
-                  <div className="flex items-center gap-2 text-sm" style={{ color: activeStep === 4 ? '#fca5a5' : 'rgba(255, 255, 255, 0.9)' }}>
+                  <p className="mb-1" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>{steps[activeStep].description}</p>
+                  <div className="flex items-center gap-2 text-sm" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
                     <Clock className="w-4 h-4" />
                     <span>Duration: {steps[activeStep].duration}</span>
                   </div>
@@ -394,12 +381,12 @@ const GettingStartedSection = () => {
                   {steps[activeStep].metrics.map((metric, index) => (
                     <motion.div
                       key={index}
-                      className="text-center p-4 bg-red-500/10 backdrop-blur-sm rounded-lg border border-red-500/20"
+                      className="text-center p-4 bg-transparent backdrop-blur-sm rounded-lg border border-white/20"
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: index * 0.1 }}
                     >
-                      <Sparkles className="w-6 h-6 mx-auto mb-2" style={{ color: '#ef4444' }} />
+                      <Sparkles className="w-6 h-6 mx-auto mb-2" style={{ color: 'white', filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 0.5))' }} />
                       <p className="text-sm font-medium" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>{metric}</p>
                     </motion.div>
                   ))}
@@ -408,10 +395,10 @@ const GettingStartedSection = () => {
 
               {/* Deliverable/Result */}
               {steps[activeStep].deliverable && (
-                <div className="bg-red-500/10 backdrop-blur-sm rounded-lg p-4 flex items-center gap-3 border border-red-500/20">
-                  <Target className="w-5 h-5 flex-shrink-0" style={{ color: '#ef4444' }} />
+                <div className="bg-transparent backdrop-blur-sm rounded-lg p-4 flex items-center gap-3 border border-white/20">
+                  <Target className="w-5 h-5 flex-shrink-0" style={{ color: 'white', filter: 'drop-shadow(0 0 3px rgba(255, 255, 255, 0.5))' }} />
                   <span style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-                    <strong style={{ color: '#ef4444', textShadow: '0 0 5px rgba(239, 68, 68, 0.3)' }}>Deliverable:</strong> {steps[activeStep].deliverable}
+                    <strong style={{ color: 'white' }}>Deliverable:</strong> {steps[activeStep].deliverable}
                   </span>
                 </div>
               )}
@@ -435,9 +422,12 @@ const GettingStartedSection = () => {
             {partnershipModels.map((model, index) => (
               <motion.div key={model.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.1 }} viewport={{ once: true }}>
                 <Card 
-                  className={`h-full cursor-pointer transition-all duration-300 bg-white/10 backdrop-blur-sm border ${
-                    selectedModel === model.id ? 'ring-4 ring-red-500 shadow-xl border-red-500/50' : 'hover:shadow-lg border-white/20'
+                  className={`h-full cursor-pointer transition-all duration-300 backdrop-blur-md bg-transparent border-2 ${
+                    selectedModel === model.id ? 'ring-4 ring-red-500 shadow-xl border-red-500/50' : 'hover:shadow-lg border-white/80'
                   }`}
+                  style={{
+                    boxShadow: '0 0 40px rgba(255, 255, 255, 0.5), inset 0 0 40px rgba(255, 255, 255, 0.1)'
+                  }}
                   onClick={() => setSelectedModel(model.id as any)}
                 >
                   <CardContent className="p-6">
@@ -448,8 +438,8 @@ const GettingStartedSection = () => {
                          }}>
                       <model.icon className="w-8 h-8 text-white" style={{ filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 0.5))' }} />
                     </div>
-                    <h4 className="text-xl font-bold mb-2" style={{ color: '#ef4444', textShadow: '0 0 8px rgba(239, 68, 68, 0.4)' }}>{model.title}</h4>
-                    <p className="mb-4" style={{ color: '#fca5a5' }}>{model.description}</p>
+                    <h4 className="text-xl font-bold mb-2" style={{ color: 'white', textShadow: '0 0 8px rgba(255, 255, 255, 0.3)' }}>{model.title}</h4>
+                    <p className="mb-4" style={{ color: 'rgba(255, 255, 255, 0.9)' }}>{model.description}</p>
                     
                     <div className="space-y-2 mb-4">
                       {model.benefits.map((benefit, idx) => (
@@ -460,9 +450,9 @@ const GettingStartedSection = () => {
                       ))}
                     </div>
                     
-                    <div className="pt-4 border-t border-red-500/20">
+                    <div className="pt-4 border-t border-white/20">
                       <p className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-                        <strong style={{ color: '#ef4444', textShadow: '0 0 5px rgba(239, 68, 68, 0.3)' }}>Best for:</strong> {model.bestFor}
+                        <strong style={{ color: 'white', textShadow: '0 0 5px rgba(255, 255, 255, 0.3)' }}>Best for:</strong> {model.bestFor}
                       </p>
                     </div>
                   </CardContent>
@@ -484,17 +474,27 @@ const GettingStartedSection = () => {
                 boxShadow: '0 0 40px rgba(239, 68, 68, 0.8), 0 8px 12px rgba(0, 0, 0, 0.15)'
               }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => setIsCalendarOpen(true)}
             >
               <Calendar className="w-6 h-6" style={{ filter: 'drop-shadow(0 0 3px rgba(255, 255, 255, 0.5))' }} />
               Schedule Your Discovery Call Today
               <ArrowRight className="w-6 h-6" style={{ filter: 'drop-shadow(0 0 3px rgba(255, 255, 255, 0.5))' }} />
             </motion.button>
-            <p className="mt-4" style={{ color: '#fca5a5' }}>
+            <p className="mt-4" style={{ 
+              color: 'rgba(255, 255, 255, 0.9)',
+              textShadow: '0 0 10px rgba(255, 255, 255, 0.5)'
+            }}>
               Join the growing network of Soaring Centers transforming education across America
             </p>
           </div>
         </AnimatedSection>
       </div>
+      
+      {/* Calendar Modal */}
+      <CalendarModal 
+        isOpen={isCalendarOpen} 
+        onClose={() => setIsCalendarOpen(false)} 
+      />
     </section>
   );
 };
