@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(bun run:*)",
+      "Bash(npm:*)",
+      "Bash(curl:*)",
+      "Bash(kill:*)",
+      "Bash(pkill:*)",
+      "Bash(true)",
+      "Bash(bun install:*)",
+      "Bash(lsof:*)",
+      "Bash(sudo lsof:*)",
+      "Bash(cat:*)",
+      "Bash(vercel)",
+      "Bash(vercel:*)",
+      "Bash(echo \"To deploy this project to Vercel:\n\n1. Run: vercel login\n   - This will open your browser\n   - Login with your Vercel account (or create one)\n   \n2. After logging in, run: vercel\n   - Follow the prompts\n   - Select ''Create new project'' if asked\n   - Choose a project name\n   - Confirm the detected Next.js framework\n   \n3. The deployment will start automatically\n\nAlternatively, if you have a Vercel token:\nvercel --token YOUR_TOKEN_HERE\")",
+      "Bash(npx tsc:*)",
+      "Bash(ls:*)",
+      "Bash(rm:*)",
+      "Bash(npx next:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}
