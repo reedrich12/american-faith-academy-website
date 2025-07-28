@@ -23,9 +23,23 @@ const FormModal = ({ isOpen, onClose, formId, formHeight, formTitle }: FormModal
 
       // Prevent body scroll when modal is open
       document.body.style.overflow = 'hidden';
+      
+      // Save current scroll position and scroll to top
+      const scrollY = window.scrollY;
+      window.scrollTo(0, 0);
+      
+      // Store scroll position to restore later
+      document.body.setAttribute('data-scroll-position', scrollY.toString());
     } else {
       // Re-enable body scroll when modal closes
       document.body.style.overflow = 'unset';
+      
+      // Restore scroll position
+      const scrollY = document.body.getAttribute('data-scroll-position');
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY));
+        document.body.removeAttribute('data-scroll-position');
+      }
     }
 
     return () => {
@@ -40,13 +54,13 @@ const FormModal = ({ isOpen, onClose, formId, formHeight, formTitle }: FormModal
       {/* Backdrop */}
       <div 
         onClick={onClose}
-        className="fixed inset-0 bg-black/50 z-50"
+        className="fixed inset-0 bg-black/50 z-[100]"
       />
       
       {/* Modal */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="fixed inset-0 z-[100] flex items-start justify-center p-4 pt-[5vh] overflow-y-auto" onClick={onClose}>
         <div 
-          className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-lg shadow-xl overflow-y-auto"
+          className="relative w-full max-w-4xl max-h-[90vh] bg-white rounded-lg shadow-xl overflow-y-auto my-auto"
           onClick={(e) => e.stopPropagation()}>
           {/* Close Button */}
           <button
