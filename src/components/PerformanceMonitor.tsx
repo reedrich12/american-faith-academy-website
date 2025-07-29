@@ -40,15 +40,17 @@ export function PerformanceMonitor() {
 
       // Core Web Vitals
       webVitals.onCLS(logMetric);     // Cumulative Layout Shift
-      webVitals.onFID(logMetric);     // First Input Delay
       webVitals.onLCP(logMetric);     // Largest Contentful Paint
       webVitals.onTTFB(logMetric);    // Time to First Byte
       webVitals.onINP(logMetric);     // Interaction to Next Paint
       
+      // FID was deprecated in web-vitals v3+, removed in v4+
+      // Use INP (Interaction to Next Paint) instead
+      
       // Additional metrics
-      webVitals.onFCP((metric: any) => {  // First Contentful Paint
-        logMetric(metric);
-      });
+      if (webVitals.onFCP) {
+        webVitals.onFCP(logMetric);   // First Contentful Paint
+      }
     };
 
     loadWebVitals();
