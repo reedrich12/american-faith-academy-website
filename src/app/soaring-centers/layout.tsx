@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 export default function SoaringCentersLayout({
@@ -9,19 +9,42 @@ export default function SoaringCentersLayout({
   children: React.ReactNode;
 }) {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const animationFrameRef = useRef<number>();
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      // Start transition immediately, complete by 60% of viewport
-      const progress = Math.min(Math.max(scrollY / (windowHeight * 0.6), 0), 1);
-      setScrollProgress(progress);
+      // Cancel any pending animation frame
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+
+      // Use requestAnimationFrame for smoother updates
+      animationFrameRef.current = requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const windowHeight = window.innerHeight;
+        // Start transition at 20% of viewport, complete by 120% of viewport
+        const startPoint = windowHeight * 0.2;
+        const endPoint = windowHeight * 1.2;
+        const progress = Math.min(Math.max((scrollY - startPoint) / (endPoint - startPoint), 0), 1);
+        
+        // Apply easing function for smoother transition
+        const easedProgress = progress < 0.5
+          ? 2 * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 2) / 2;
+        
+        setScrollProgress(easedProgress);
+      });
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll(); // Initial call
-    return () => window.removeEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
   }, []);
 
   return (
@@ -90,29 +113,32 @@ export default function SoaringCentersLayout({
       
       {/* Initial white background that fades out */}
       <div 
-        className="fixed inset-0 bg-gradient-to-b from-white to-gray-50"
+        className="fixed inset-0 bg-gradient-to-b from-white to-gray-50 will-change-transform"
         style={{
           opacity: 1 - scrollProgress,
-          zIndex: -3
+          zIndex: -3,
+          transition: 'opacity 0.15s ease-out'
         }}
       />
       
       {/* Blue background that fades in */}
       <div 
-        className="fixed inset-0 transition-all duration-1000 ease-out"
+        className="fixed inset-0 will-change-transform"
         style={{
           background: 'linear-gradient(to bottom right, #1e3a8a 0%, #1e293b 100%)',
           opacity: scrollProgress,
-          zIndex: -2
+          zIndex: -2,
+          transition: 'opacity 0.15s ease-out'
         }}
       />
       
       {/* Stars layer */}
       <div 
-        className="star-background-layer"
+        className="star-background-layer will-change-transform"
         style={{ 
-          opacity: scrollProgress,
-          zIndex: -1
+          opacity: scrollProgress * scrollProgress, // Quadratic easing for stars
+          zIndex: -1,
+          transition: 'opacity 0.15s ease-out'
         }}
       >
         {[...Array(100)].map((_, i) => (
