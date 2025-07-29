@@ -3,34 +3,17 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Building2, Users, TrendingUp, Heart, Star, ArrowRight } from 'lucide-react';
+import { Building2, Users, TrendingUp, Heart, Star, ArrowRight, Church, Briefcase, CheckCircle2 } from 'lucide-react';
 import AnimatedSection from '@/components/ui/animated-section';
 import Link from 'next/link';
 
 const PartnershipSection = () => {
   const paths = [
     {
-      title: "Edupreneur Path",
-      subtitle: "Bring Exceptional Learning To Your Community",
-      description: "Bring AFA to your community as an Edupreneur and impact students through faith-driven education.",
-      icon: Users,
-      benefits: [
-        "Proven Business Model",
-        "Complete Training Program",
-        "Ongoing Support",
-        "Marketing Resources",
-        "Community Impact"
-      ],
-      cta: "Become an Edupreneur",
-      href: "/soaring-centers#edupreneur",
-      color: "from-navy-500 to-navy-600",
-      bgColor: "from-navy-50 to-navy-100"
-    },
-    {
       title: "Church Partnership",
       subtitle: "Turn Your Church into a Thriving Learning Center",
       description: "Support Christian families by offering education where faith takes flight.",
-      icon: Building2,
+      icon: Church,
       benefits: [
         "Ministry Expansion",
         "Community Service",
@@ -38,10 +21,41 @@ const PartnershipSection = () => {
         "Family Engagement",
         "Kingdom Impact"
       ],
+      uniqueValue: "Transform your existing facilities into a thriving educational ministry that impacts generations.",
       cta: "Partner with AFA",
       href: "/soaring-centers#church",
-      color: "from-patriot-500 to-patriot-600",
-      bgColor: "from-patriot-50 to-patriot-100"
+      color: "from-blue-900 to-blue-950",
+      bgColor: "from-blue-50 to-blue-100",
+      cardBg: "linear-gradient(135deg, #ffffff 0%, #e0e7ff 50%, #c7d2fe 100%)",
+      borderColor: "rgba(59, 130, 246, 0.2)",
+      checkColor: "text-blue-900",
+      uniqueBgColor: "bg-blue-50",
+      uniqueBorderColor: "border-blue-300",
+      uniqueTextColor: "text-blue-900"
+    },
+    {
+      title: "Edupreneur Path",
+      subtitle: "Bring Exceptional Learning To Your Community",
+      description: "Bring AFA to your community as an Edupreneur and impact students through faith-driven education.",
+      icon: Briefcase,
+      benefits: [
+        "Proven Business Model",
+        "Complete Training Program",
+        "Ongoing Support",
+        "Marketing Resources",
+        "Community Impact"
+      ],
+      uniqueValue: "Launch a successful education business that changes lives while providing financial freedom.",
+      cta: "Become an Edupreneur",
+      href: "/soaring-centers#edupreneur",
+      color: "from-red-700 to-red-800",
+      bgColor: "from-red-50 to-red-100",
+      cardBg: "linear-gradient(135deg, #ffffff 0%, #ffe4e4 50%, #ffcccc 100%)",
+      borderColor: "rgba(239, 68, 68, 0.2)",
+      checkColor: "text-red-700",
+      uniqueBgColor: "bg-red-50",
+      uniqueBorderColor: "border-red-300",
+      uniqueTextColor: "text-red-900"
     }
   ];
 
@@ -86,64 +100,53 @@ const PartnershipSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {paths.map((path, index) => (
             <AnimatedSection key={index} delay={index * 0.2}>
-              <Card className="h-full group hover:shadow-2xl transition-all duration-500 border-0 overflow-hidden">
-                <CardContent className="p-0">
-                  {/* Header */}
-                  <div className={`bg-gradient-to-r ${path.bgColor} p-8 relative overflow-hidden`}>
-                    <motion.div 
-                      className={`w-20 h-20 rounded-full bg-gradient-to-r ${path.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
-                      whileHover={{ rotate: 360 }}
-                      transition={{ duration: 0.6 }}
-                    >
-                      <path.icon className="w-10 h-10 text-white" />
-                    </motion.div>
-                    
-                    <h3 className="font-serif text-3xl font-bold text-navy mb-2">
-                      {path.title}
-                    </h3>
-                    <h4 className="text-xl font-semibold text-patriot mb-4">
-                      {path.subtitle}
-                    </h4>
-                    <p className="text-gray-700 leading-relaxed mb-6">
-                      {path.description}
+              <Card 
+                className="h-full cursor-pointer transition-all duration-300 hover:shadow-2xl"
+                style={{
+                  background: path.cardBg,
+                  border: `2px solid ${path.borderColor}`
+                }}
+              >
+                <CardContent className="p-8 relative">
+                  <div className={`w-20 h-20 rounded-full bg-gradient-to-r ${path.color} flex items-center justify-center mb-6 relative z-10`}>
+                    <path.icon className="w-10 h-10 text-white" />
+                  </div>
+                  
+                  <h3 className="text-3xl font-bold text-navy mb-2 relative z-10">{path.title}</h3>
+                  <p className="text-lg text-gray-600 mb-6 relative z-10">{path.subtitle}</p>
+                  
+                  <div className="space-y-3 mb-6 relative z-10">
+                    {path.benefits.map((benefit, benefitIndex) => (
+                      <motion.div 
+                        key={benefitIndex}
+                        className="flex items-start gap-3"
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: benefitIndex * 0.1 }}
+                        viewport={{ once: true }}
+                      >
+                        <CheckCircle2 className={`w-5 h-5 ${path.checkColor} flex-shrink-0 mt-0.5`} />
+                        <span className="text-gray-700">{benefit}</span>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  <div className={`p-4 ${path.uniqueBgColor} rounded-lg border ${path.uniqueBorderColor} relative z-10 mb-6`}>
+                    <p className={`text-sm font-semibold ${path.uniqueTextColor}`}>
+                      {path.uniqueValue}
                     </p>
-
-                    {/* Benefits */}
-                    <div className="space-y-2">
-                      {path.benefits.map((benefit, benefitIndex) => (
-                        <motion.div 
-                          key={benefitIndex}
-                          className="flex items-center space-x-2"
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.5, delay: benefitIndex * 0.1 }}
-                          viewport={{ once: true }}
-                        >
-                          <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${path.color}`} />
-                          <span className="text-gray-600 font-medium">{benefit}</span>
-                        </motion.div>
-                      ))}
-                    </div>
-
-                    {/* Decorative Elements */}
-                    <div className="absolute top-4 right-4 opacity-10">
-                      <path.icon className="w-32 h-32" />
-                    </div>
                   </div>
 
-                  {/* CTA */}
-                  <div className="p-8">
-                    <Button 
-                      size="lg" 
-                      className={`w-full bg-gradient-to-r ${path.color} hover:opacity-90 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group`}
-                      asChild
-                    >
-                      <Link href={path.href}>
-                        {path.cta}
-                        <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                      </Link>
-                    </Button>
-                  </div>
+                  <Button 
+                    size="lg" 
+                    className={`w-full bg-gradient-to-r ${path.color} hover:opacity-90 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group`}
+                    asChild
+                  >
+                    <Link href={path.href}>
+                      {path.cta}
+                      <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
+                    </Link>
+                  </Button>
                 </CardContent>
               </Card>
             </AnimatedSection>

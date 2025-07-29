@@ -42,9 +42,7 @@ const Navigation = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-navy rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">AFA</span>
-            </div>
+            <img src="/afa-logo.png" alt="AFA Logo" className="h-12 w-auto" />
             <div className="hidden sm:block">
               <h1 className="font-serif font-bold text-xl text-navy">
                 American Faith Academy
@@ -86,9 +84,7 @@ const Navigation = () => {
             <SheetContent side="right" className="w-[300px] bg-white">
               <div className="flex flex-col space-y-6 mt-8">
                 <div className="flex items-center space-x-3 pb-6 border-b">
-                  <div className="w-10 h-10 bg-navy rounded-full flex items-center justify-center">
-                    <span className="text-white font-bold">AFA</span>
-                  </div>
+                  <img src="/afa-logo.png" alt="AFA Logo" className="h-10 w-auto" />
                   <div>
                     <h2 className="font-serif font-bold text-navy">American Faith Academy</h2>
                   </div>

@@ -9,9 +9,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-12 h-12 bg-patriot rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-xl">AFA</span>
-              </div>
+              <img src="/afa-logo.png" alt="AFA Logo" className="h-12 w-auto" />
               <div>
                 <h3 className="font-serif font-bold text-xl">American Faith Academy</h3>
                 <p className="text-sm text-gray-300">Where Minds Soar and Faith Takes Flight</p>
@@ -70,7 +68,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-4 w-4 text-patriot" />
-                <span className="text-gray-300">info@americanfaithacademy.org</span>
+                <span className="text-gray-300">admin@americanfaithacademy.org</span>
               </div>
               <div className="flex items-start space-x-3">
                 <MapPin className="h-4 w-4 text-patriot mt-1" />
@@ -87,7 +85,7 @@ const Footer = () => {
         <div className="border-t border-gray-700 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-300 text-sm">
-              © 2024 American Faith Academy. All rights reserved.
+              © 2025 American Faith Academy. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link href="/privacy" className="text-gray-300 hover:text-white text-sm transition-colors">

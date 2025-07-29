@@ -193,7 +193,7 @@ const LearningModelsSection = () => {
                       opacity: [0.7, 0, 0.7]
                     }}
                     transition={{
-                      duration: 2,
+                      duration: 3.5,
                       repeat: Number.POSITIVE_INFINITY,
                       delay: pin.delay
                     }}

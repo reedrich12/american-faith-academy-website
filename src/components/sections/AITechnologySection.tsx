@@ -89,8 +89,8 @@ const AITechnologySection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
           {features.map((feature, index) => (
             <AnimatedSection key={index} delay={index * 0.2}>
-              <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300 group">
-                <CardContent className="p-8 text-center">
+              <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/20 transition-all duration-300 group h-full">
+                <CardContent className="p-8 text-center h-full flex flex-col">
                   <motion.div 
                     className={`w-16 h-16 mx-auto mb-6 bg-gradient-to-r ${feature.color} rounded-full flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}
                     whileHover={{ rotate: 360 }}
@@ -102,7 +102,7 @@ const AITechnologySection = () => {
                   <h3 className="font-serif text-2xl font-bold mb-4">
                     {feature.title}
                   </h3>
-                  <p className="text-gray-300 leading-relaxed">
+                  <p className="text-gray-300 leading-relaxed flex-grow">
                     {feature.description}
                   </p>
                 </CardContent>
