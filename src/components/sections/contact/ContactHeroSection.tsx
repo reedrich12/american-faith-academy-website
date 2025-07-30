@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Phone, Mail, MessageCircle, Clock } from 'lucide-react';
 import AnimatedSection from '@/components/ui/animated-section';
+import BaseHeroSection from '@/components/sections/BaseHeroSection';
 
 const ContactHeroSection = () => {
   const contactMethods = [
@@ -40,18 +41,17 @@ const ContactHeroSection = () => {
   return (
     <section className="py-20 bg-gradient-to-br from-navy-50 via-white to-patriot-50">
       <div className="container mx-auto px-4">
-        <AnimatedSection className="text-center mb-16">
-          <h1 className="font-serif text-5xl md:text-6xl font-bold text-navy mb-6 leading-tight">
-            Have Questions? We're Here to Help.
-          </h1>
-          <h2 className="text-2xl md:text-3xl text-patriot font-semibold mb-6">
-            Whether you're a parent, educator, or church leader, our team is ready to assist you.
-          </h2>
-          <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-            Our dedicated support team is committed to providing you with the information and guidance 
-            you need to make the best educational decisions for your family or organization.
-          </p>
-        </AnimatedSection>
+        <BaseHeroSection
+          className="text-center mb-16"
+          title="Have Questions? We're Here to Help."
+          subtitle="Whether you're a parent, educator, or church leader, our team is ready to assist you."
+          description={
+            <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+              Our dedicated support team is committed to providing you with the information and guidance
+              you need to make the best educational decisions for your family or organization.
+            </p>
+          }
+        />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {contactMethods.map((method, index) => (

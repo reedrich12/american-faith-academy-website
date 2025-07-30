@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { BookOpen, Brain, Heart, Target } from 'lucide-react';
 import AnimatedSection from '@/components/ui/animated-section';
+import BaseHeroSection from '@/components/sections/BaseHeroSection';
 import Link from 'next/link';
 
 const AcademicsHeroSection = () => {
@@ -36,46 +37,46 @@ const AcademicsHeroSection = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
-          <AnimatedSection>
-            <h1 className="font-serif text-5xl md:text-6xl font-bold text-navy mb-6 leading-tight">
-              Education That Transforms Hearts, Minds, and Futures
-            </h1>
-            <h2 className="text-2xl md:text-3xl text-patriot font-semibold mb-6">
-              Where Biblical Truth Meets Classical Excellence in a Flexible Learning Environment
-            </h2>
-            <div className="prose prose-lg text-gray-600 mb-8">
-              <p>
-                At American Faith Academy, we believe that how you learn matters more than what you learn. 
-                Our classical Christian approach develops critical thinking skills, moral character, and 
-                a love of learning that lasts a lifetime.
-              </p>
-              <p>
-                We don't just teach students what to think—we teach them how to think, how to learn, 
-                and how to discover truth through the lens of Scripture.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
-                className="bg-patriot hover:bg-patriot-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-                asChild
-              >
-                <Link href="/admissions">
-                  Explore Our Curriculum
-                </Link>
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-2 border-navy text-navy hover:bg-navy hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
-                asChild
-              >
-                <Link href="/contact">
-                  Schedule a Consultation
-                </Link>
-              </Button>
-            </div>
-          </AnimatedSection>
+          <BaseHeroSection
+            title="Education That Transforms Hearts, Minds, and Futures"
+            subtitle="Where Biblical Truth Meets Classical Excellence in a Flexible Learning Environment"
+            description={
+              <div className="prose prose-lg text-gray-600 mb-8">
+                <p>
+                  At American Faith Academy, we believe that how you learn matters more than what you learn.
+                  Our classical Christian approach develops critical thinking skills, moral character, and
+                  a love of learning that lasts a lifetime.
+                </p>
+                <p>
+                  We don't just teach students what to think—we teach them how to think, how to learn,
+                  and how to discover truth through the lens of Scripture.
+                </p>
+              </div>
+            }
+            cta={
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button
+                  size="lg"
+                  className="bg-patriot hover:bg-patriot-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                  asChild
+                >
+                  <Link href="/admissions">
+                    Explore Our Curriculum
+                  </Link>
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-2 border-navy text-navy hover:bg-navy hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
+                  asChild
+                >
+                  <Link href="/contact">
+                    Schedule a Consultation
+                  </Link>
+                </Button>
+              </div>
+            }
+          />
 
           {/* Highlights Grid */}
           <AnimatedSection delay={0.3}>

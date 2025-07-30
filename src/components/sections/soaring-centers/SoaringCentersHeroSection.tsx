@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Building2, Users, TrendingUp, Heart, ChevronDown, GraduationCap, BookOpen } from 'lucide-react';
 import AnimatedSection from '@/components/ui/animated-section';
+import BaseHeroSection from '@/components/sections/BaseHeroSection';
 import Link from 'next/link';
 import FormModal from '@/components/ui/form-modal';
 
@@ -89,42 +90,42 @@ const SoaringCentersHeroSection = () => {
       <div className="container mx-auto px-4 relative z-10" ref={heroRef}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
-          <AnimatedSection>
-            <h1 className="font-serif text-5xl md:text-6xl font-bold text-navy mb-6 leading-tight">
-              Transform Your Community Through Classical Christian Education
-            </h1>
-            <h2 className="text-2xl md:text-3xl text-patriot font-semibold mb-6">
-              Make a Difference While Making a Living—Or Fulfill Your Church's Educational Mission
-            </h2>
-            <div className="prose prose-lg text-gray-600 mb-8">
-              <p>
-                Join the American Faith Academy network and bring exceptional classical Christian 
-                education to your community. Whether you're a church looking to expand your ministry 
-                or an entrepreneur passionate about education, we provide everything you need to succeed.
-              </p>
-              <p>
-                Our proven model combines the best of classical education with modern technology, 
-                creating opportunities for both ministry impact and business success.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
-                className="bg-patriot hover:bg-patriot-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
-                onClick={() => setIsSoaringFormOpen(true)}
-              >
-                Church Partnership
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-2 border-navy text-navy hover:bg-navy hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
-                onClick={() => setIsSoaringFormOpen(true)}
-              >
-                Edupreneur Program
-              </Button>
-            </div>
-          </AnimatedSection>
+          <BaseHeroSection
+            title="Transform Your Community Through Classical Christian Education"
+            subtitle="Make a Difference While Making a Living—Or Fulfill Your Church's Educational Mission"
+            description={
+              <div className="prose prose-lg text-gray-600 mb-8">
+                <p>
+                  Join the American Faith Academy network and bring exceptional classical Christian
+                  education to your community. Whether you're a church looking to expand your ministry
+                  or an entrepreneur passionate about education, we provide everything you need to succeed.
+                </p>
+                <p>
+                  Our proven model combines the best of classical education with modern technology,
+                  creating opportunities for both ministry impact and business success.
+                </p>
+              </div>
+            }
+            cta={
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button
+                  size="lg"
+                  className="bg-patriot hover:bg-patriot-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                  onClick={() => setIsSoaringFormOpen(true)}
+                >
+                  Church Partnership
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-2 border-navy text-navy hover:bg-navy hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
+                  onClick={() => setIsSoaringFormOpen(true)}
+                >
+                  Edupreneur Program
+                </Button>
+              </div>
+            }
+          >
 
           {/* Opportunities Grid */}
           <AnimatedSection delay={0.3}>
@@ -158,7 +159,7 @@ const SoaringCentersHeroSection = () => {
                 </motion.div>
               ))}
             </div>
-          </AnimatedSection>
+          </BaseHeroSection>
         </div>
 
         {/* Scroll Indicator */}

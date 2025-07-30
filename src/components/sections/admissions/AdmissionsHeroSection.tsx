@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, Clock, Users, DollarSign } from 'lucide-react';
 import AnimatedSection from '@/components/ui/animated-section';
+import BaseHeroSection from '@/components/sections/BaseHeroSection';
 import Link from 'next/link';
 import FormModal from '@/components/ui/form-modal';
 import CalendarModal from '@/components/ui/calendar-modal';
@@ -42,42 +43,42 @@ const AdmissionsHeroSection = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
-          <AnimatedSection>
-            <h1 className="font-serif text-5xl md:text-6xl font-bold text-navy mb-6 leading-tight">
-              The Best Choice You Can Make For Your Child's Future Is Only A Few Steps Away
-            </h1>
-            <h2 className="text-2xl md:text-3xl text-patriot font-semibold mb-6">
-              A Simple & Supportive Process
-            </h2>
-            <div className="prose prose-lg text-gray-600 mb-8">
-              <p>
-                Starting your child's journey at American Faith Academy is straightforward and supportive. 
-                Our admissions team is here to guide you through every step, ensuring you have all the 
-                information you need to make the best decision for your family.
-              </p>
-              <p>
-                With flexible learning options and comprehensive support, we make it easy for families 
-                to access exceptional classical Christian education.
-              </p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-4 mb-8">
-              <Button 
-                size="lg" 
-                className="bg-patriot hover:bg-patriot-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                onClick={() => setIsApplicationOpen(true)}
-              >
-                Start Enrollment Today
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-2 border-navy text-navy hover:bg-navy hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
-                onClick={() => setIsCalendarOpen(true)}
-              >
-                Schedule Discovery Call
-              </Button>
-            </div>
-
+          <BaseHeroSection
+            title="The Best Choice You Can Make For Your Child's Future Is Only A Few Steps Away"
+            subtitle="A Simple & Supportive Process"
+            description={
+              <div className="prose prose-lg text-gray-600 mb-8">
+                <p>
+                  Starting your child's journey at American Faith Academy is straightforward and supportive.
+                  Our admissions team is here to guide you through every step, ensuring you have all the
+                  information you need to make the best decision for your family.
+                </p>
+                <p>
+                  With flexible learning options and comprehensive support, we make it easy for families
+                  to access exceptional classical Christian education.
+                </p>
+              </div>
+            }
+            cta={
+              <div className="flex flex-col sm:flex-row gap-4 mb-8">
+                <Button
+                  size="lg"
+                  className="bg-patriot hover:bg-patriot-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  onClick={() => setIsApplicationOpen(true)}
+                >
+                  Start Enrollment Today
+                </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-2 border-navy text-navy hover:bg-navy hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
+                  onClick={() => setIsCalendarOpen(true)}
+                >
+                  Schedule Discovery Call
+                </Button>
+              </div>
+            }
+          >
             {/* Trust Indicators */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
@@ -99,7 +100,7 @@ const AdmissionsHeroSection = () => {
                 </motion.div>
               ))}
             </div>
-          </AnimatedSection>
+          </BaseHeroSection>
 
           {/* Process Steps */}
           <AnimatedSection delay={0.3}>

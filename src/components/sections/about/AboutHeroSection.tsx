@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Users, BookOpen, Heart, Target } from 'lucide-react';
 import AnimatedSection from '@/components/ui/animated-section';
+import BaseHeroSection from '@/components/sections/BaseHeroSection';
 
 const AboutHeroSection = () => {
   const statistics = [
@@ -47,27 +48,27 @@ const AboutHeroSection = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
-          <AnimatedSection>
-            <h1 className="font-serif text-5xl md:text-6xl font-bold text-navy mb-6 leading-tight">
-              Restoring Education to Its Noble Purpose
-            </h1>
-            <h2 className="text-2xl md:text-3xl text-patriot font-semibold mb-6">
-              American Faith Academy was founded on the conviction that every child deserves 
-              an education that develops both brilliant minds and faithful hearts.
-            </h2>
-            <div className="prose prose-lg text-gray-600 mb-8">
-              <p>
-                In a world where education has lost its way, we stand as a beacon of hope—
-                combining the time-tested wisdom of classical education with the innovative 
-                power of modern technology, all grounded in biblical truth.
-              </p>
-              <p>
-                Our mission is simple yet profound: to provide an education worthy of our children, 
-                one that prepares them not just for college or career, but for a life of purpose, 
-                impact, and faithful service to God and others.
-              </p>
-            </div>
-
+          <BaseHeroSection
+            title="Restoring Education to Its Noble Purpose"
+            subtitle={
+              <>American Faith Academy was founded on the conviction that every child deserves
+              an education that develops both brilliant minds and faithful hearts.</>
+            }
+            description={
+              <div className="prose prose-lg text-gray-600 mb-8">
+                <p>
+                  In a world where education has lost its way, we stand as a beacon of hope—
+                  combining the time-tested wisdom of classical education with the innovative
+                  power of modern technology, all grounded in biblical truth.
+                </p>
+                <p>
+                  Our mission is simple yet profound: to provide an education worthy of our children,
+                  one that prepares them not just for college or career, but for a life of purpose,
+                  impact, and faithful service to God and others.
+                </p>
+              </div>
+            }
+          >
             {/* Key Values Grid */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
               {values.map((value, index) => (
@@ -84,7 +85,7 @@ const AboutHeroSection = () => {
                 </motion.div>
               ))}
             </div>
-          </AnimatedSection>
+          </BaseHeroSection>
 
           {/* Statistics */}
           <AnimatedSection delay={0.3}>
