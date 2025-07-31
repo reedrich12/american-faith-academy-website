@@ -13,10 +13,28 @@ const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     rules: {
-      "@typescript-eslint/no-unused-vars": "off",
-      "react/no-unescaped-entities": "off",
-      "@next/next/no-img-element": "off",
-      "jsx-a11y/alt-text": "off",
+      // TypeScript rules
+      "@typescript-eslint/no-unused-vars": "warn", // Changed from off to warn
+      
+      // React rules
+      "react/no-unescaped-entities": "warn", // Changed from off to warn
+      
+      // Next.js rules  
+      "@next/next/no-img-element": "error", // Enforce Next.js Image component
+      
+      // Accessibility rules - ENABLE ALL
+      "jsx-a11y/alt-text": "error", // Was off - now enforced!
+      "jsx-a11y/anchor-is-valid": "error",
+      "jsx-a11y/aria-props": "error",
+      "jsx-a11y/aria-proptypes": "error",
+      "jsx-a11y/aria-unsupported-elements": "error",
+      "jsx-a11y/heading-has-content": "error",
+      "jsx-a11y/label-has-associated-control": "error",
+      "jsx-a11y/lang": "error",
+      "jsx-a11y/no-access-key": "error",
+      "jsx-a11y/no-autofocus": "warn",
+      "jsx-a11y/role-has-required-aria-props": "error",
+      "jsx-a11y/role-supports-aria-props": "error",
     },
   },
 ];

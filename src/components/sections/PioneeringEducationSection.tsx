@@ -3,12 +3,27 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { TrendingUp, Users, BookOpen, Award } from 'lucide-react';
+import { TrendingUp, Users, BookOpen, Award, LucideIcon } from 'lucide-react';
 import AnimatedSection from '@/components/ui/animated-section';
 import Link from 'next/link';
+import { usePrefersReducedMotion } from '@/hooks';
 
-const PioneeringEducationSection = () => {
-  const statistics = [
+interface Statistic {
+  icon: LucideIcon;
+  value: string;
+  label: string;
+  description: string;
+}
+
+interface ProgressItem {
+  label: string;
+  percentage: number;
+}
+
+const PioneeringEducationSection: React.FC = () => {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  const statistics: Statistic[] = [
     {
       icon: TrendingUp,
       value: "85%",
@@ -35,13 +50,36 @@ const PioneeringEducationSection = () => {
     }
   ];
 
+  const progressItems: ProgressItem[] = [
+    { label: "Faith Retention", percentage: 92 },
+    { label: "Academic Acceleration", percentage: 85 },
+    { label: "College Readiness", percentage: 95 },
+    { label: "Character Development", percentage: 88 }
+  ];
+
+  const cardVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: { opacity: 1, scale: 1 }
+  };
+
+  const barVariants = {
+    hidden: { width: 0 },
+    visible: (percentage: number) => ({ width: `${percentage}%` })
+  };
+
   return (
-    <section className="py-20 bg-white">
+    <section 
+      className="py-20 bg-white"
+      aria-labelledby="pioneering-education-heading"
+    >
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <AnimatedSection>
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-navy mb-6">
+            <h2 
+              id="pioneering-education-heading"
+              className="font-serif text-4xl md:text-5xl font-bold text-navy mb-6"
+            >
               Join the Future of Education: Where Innovation Meets Proven Excellence
             </h2>
             <h3 className="text-xl md:text-2xl text-patriot font-semibold mb-6">
@@ -66,7 +104,10 @@ const PioneeringEducationSection = () => {
               className="border-2 border-patriot text-patriot hover:bg-patriot hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300"
               asChild
             >
-              <Link href="/academics">
+              <Link 
+                href="/academics"
+                aria-label="Learn more about the research that guides our educational approach"
+              >
                 See the Research That Guides Us
               </Link>
             </Button>
@@ -74,52 +115,63 @@ const PioneeringEducationSection = () => {
 
           {/* Statistics Visualization */}
           <AnimatedSection delay={0.3}>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {statistics.map((stat, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                >
-                  <Card className="text-center p-6 hover:shadow-lg transition-shadow duration-300 border-0 bg-gradient-to-br from-gray-50 to-white">
-                    <CardContent className="p-0">
-                      <motion.div 
-                        className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-navy-500 to-patriot-500 rounded-full flex items-center justify-center"
-                        whileHover={{ scale: 1.1, rotate: 360 }}
-                        transition={{ duration: 0.6 }}
-                      >
-                        <stat.icon className="w-8 h-8 text-white" />
-                      </motion.div>
-                      
-                      <motion.div 
-                        className="text-4xl font-bold text-patriot mb-2"
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
-                        viewport={{ once: true }}
-                      >
-                        <motion.span
+            <div 
+              className="grid grid-cols-1 sm:grid-cols-2 gap-6"
+              role="list"
+              aria-label="Educational statistics"
+            >
+              {statistics.map((stat, index) => {
+                const Icon = stat.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    variants={cardVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    transition={{ duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                    role="listitem"
+                  >
+                    <Card className="text-center p-6 hover:shadow-lg transition-shadow duration-300 border-0 bg-gradient-to-br from-gray-50 to-white">
+                      <CardContent className="p-0">
+                        <motion.div 
+                          className="w-16 h-16 mx-auto mb-4 bg-gradient-to-r from-navy-500 to-patriot-500 rounded-full flex items-center justify-center"
+                          whileHover={prefersReducedMotion ? {} : { scale: 1.1, rotate: 360 }}
+                          transition={{ duration: 0.6 }}
+                          role="presentation"
+                        >
+                          <Icon className="w-8 h-8 text-white" aria-hidden="true" />
+                        </motion.div>
+                        
+                        <motion.div 
+                          className="text-4xl font-bold text-patriot mb-2"
                           initial={{ opacity: 0 }}
                           whileInView={{ opacity: 1 }}
-                          transition={{ duration: 2, delay: 0.5 + index * 0.1 }}
+                          transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
                           viewport={{ once: true }}
+                          aria-label={`${stat.value} ${stat.label}`}
                         >
-                          {stat.value}
-                        </motion.span>
-                      </motion.div>
-                      
-                      <h4 className="font-semibold text-navy mb-2">
-                        {stat.label}
-                      </h4>
-                      <p className="text-sm text-gray-600">
-                        {stat.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              ))}
+                          <motion.span
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            transition={{ duration: 2, delay: 0.5 + index * 0.1 }}
+                            viewport={{ once: true }}
+                          >
+                            {stat.value}
+                          </motion.span>
+                        </motion.div>
+                        
+                        <h4 className="font-semibold text-navy mb-2">
+                          {stat.label}
+                        </h4>
+                        <p className="text-sm text-gray-600">
+                          {stat.description}
+                        </p>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                );
+              })}
             </div>
 
             {/* Interactive Data Visualization */}
@@ -129,29 +181,48 @@ const PioneeringEducationSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
               viewport={{ once: true }}
+              role="region"
+              aria-labelledby="research-results-heading"
             >
-              <h4 className="font-semibold text-navy mb-4 text-center">
+              <h4 
+                id="research-results-heading"
+                className="font-semibold text-navy mb-4 text-center"
+              >
                 Research-Backed Results
               </h4>
-              <div className="space-y-3">
-                {[
-                  { label: "Faith Retention", percentage: 92 },
-                  { label: "Academic Acceleration", percentage: 85 },
-                  { label: "College Readiness", percentage: 95 },
-                  { label: "Character Development", percentage: 88 }
-                ].map((item, index) => (
-                  <div key={index} className="flex items-center justify-between">
+              <div 
+                className="space-y-3"
+                role="list"
+                aria-label="Performance metrics"
+              >
+                {progressItems.map((item, index) => (
+                  <div 
+                    key={index} 
+                    className="flex items-center justify-between"
+                    role="listitem"
+                  >
                     <span className="text-sm font-medium text-gray-700">{item.label}</span>
-                    <div className="flex-1 mx-4 bg-gray-200 rounded-full h-2">
+                    <div 
+                      className="flex-1 mx-4 bg-gray-200 rounded-full h-2"
+                      role="progressbar"
+                      aria-label={`${item.label}: ${item.percentage}%`}
+                      aria-valuenow={item.percentage}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                    >
                       <motion.div 
                         className="h-2 bg-gradient-to-r from-navy-500 to-patriot-500 rounded-full"
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${item.percentage}%` }}
+                        variants={barVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        custom={item.percentage}
                         transition={{ duration: 1.5, delay: 0.8 + index * 0.2 }}
                         viewport={{ once: true }}
                       />
                     </div>
-                    <span className="text-sm font-bold text-patriot">{item.percentage}%</span>
+                    <span className="text-sm font-bold text-patriot" aria-hidden="true">
+                      {item.percentage}%
+                    </span>
                   </div>
                 ))}
               </div>

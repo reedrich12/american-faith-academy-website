@@ -11,7 +11,7 @@ import FinalCTASection from '@/components/sections/FinalCTASection';
 export default function Home() {
   return (
     <div className="pt-20">
-      <HeroSection />
+      <HeroSection title="Where Minds Soar and Faith Takes Flight" />
       <SoarFrameworkSection />
       <PioneeringEducationSection />
       <LearningModelsSection />

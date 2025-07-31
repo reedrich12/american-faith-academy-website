@@ -41,4 +41,16 @@ yarn-error.log*
 next-env.d.ts
 
 # logs
+/logs/
+*.log
 dev.log
+before-optimization.log
+after-optimization.log
+
+# Package manager files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# temporary build logs directory (if it exists)
+/build-logs/

@@ -2,17 +2,34 @@
 
 import { useEffect } from 'react';
 
+// Type definitions for web-vitals
+interface Metric {
+  name: string;
+  value: number;
+  rating?: string;
+  delta?: number;
+  id?: string;
+}
+
+interface WebVitals {
+  onCLS: (callback: (metric: Metric) => void) => void;
+  onLCP: (callback: (metric: Metric) => void) => void;
+  onTTFB: (callback: (metric: Metric) => void) => void;
+  onINP: (callback: (metric: Metric) => void) => void;
+  onFCP?: (callback: (metric: Metric) => void) => void;
+}
+
 // Dynamically import web-vitals to avoid SSR issues
-let webVitals: any = null;
+let webVitals: WebVitals | null = null;
 
 export function PerformanceMonitor() {
   useEffect(() => {
     const loadWebVitals = async () => {
       if (!webVitals) {
-        webVitals = await import('web-vitals');
+        webVitals = await import('web-vitals') as WebVitals;
       }
       
-      const logMetric = (metric: any) => {
+      const logMetric = (metric: Metric) => {
         const value = metric.value.toFixed(2);
         const rating = metric.rating || 'N/A';
         
@@ -62,6 +79,6 @@ export function PerformanceMonitor() {
 // TypeScript declaration for gtag
 declare global {
   interface Window {
-    gtag: (...args: any[]) => void;
+    gtag: (...args: unknown[]) => void;
   }
 }

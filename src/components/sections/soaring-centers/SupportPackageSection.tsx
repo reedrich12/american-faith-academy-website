@@ -4,29 +4,33 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import AnimatedSection from '@/components/ui/animated-section';
 import { Card, CardContent } from '@/components/ui/card';
-import { 
-  ChevronDown, 
-  ChevronUp,
-  CheckCircle,
-  Sparkles,
-  Users,
-  LineChart,
-  Shield,
-  Laptop,
-  Award,
-  MessageSquare,
-  Calendar,
-  FileText,
-  Palette,
-  Globe,
-  BookOpen,
-  Briefcase
-} from 'lucide-react';
+import { ChevronDown, CheckCircle, Sparkles, Users, LineChart, Shield, Laptop, Award, MessageSquare, Calendar, FileText, Palette, Globe, BookOpen, Briefcase, LucideIcon } from 'lucide-react';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+
+// TypeScript interfaces
+interface SupportFeatures {
+  included: string[];
+  additional: string[];
+}
+
+interface SupportPillar {
+  id: string;
+  title: string;
+  subtitle: string;
+  highlights: string[];
+  features: SupportFeatures;
+}
+
+interface SupportIcon {
+  icon: LucideIcon;
+  label: string;
+}
 
 const SupportPackageSection = () => {
   const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
+  const prefersReducedMotion = usePrefersReducedMotion();
 
-  const supportPillars = [
+  const supportPillars: SupportPillar[] = [
     {
       id: 'curriculum',
       title: 'Curriculum & Methodology',
@@ -140,6 +144,21 @@ const SupportPackageSection = () => {
     }
   ];
 
+  const supportIcons: SupportIcon[] = [
+    { icon: Users, label: 'Community' },
+    { icon: LineChart, label: 'Analytics' },
+    { icon: Shield, label: 'Compliance' },
+    { icon: Laptop, label: 'Technology' },
+    { icon: Award, label: 'Quality' },
+    { icon: MessageSquare, label: 'Support' },
+    { icon: Calendar, label: 'Events' },
+    { icon: FileText, label: 'Resources' },
+    { icon: Palette, label: 'Branding' },
+    { icon: Globe, label: 'Network' },
+    { icon: BookOpen, label: 'Curriculum' },
+    { icon: Briefcase, label: 'Business' }
+  ];
+
   const toggleCard = (index: number) => {
     const newExpanded = new Set(expandedCards);
     if (newExpanded.has(index)) {
@@ -166,534 +185,209 @@ const SupportPackageSection = () => {
   };
 
   return (
-    <>
-      <style jsx={true} global={true}>{`
-        /* Layout #1: Static Grid Implementation */
-        
-        /* Flag segment pseudo-elements on cards */
-        .flag-card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            animation: slideUp 0.6s ease-out backwards;
-        }
+    <section className="py-20" aria-labelledby="support-package-heading">
+      <div className="container mx-auto px-4">
+        {/* Header */}
+        <AnimatedSection className="text-center mb-16">
+          <h2 
+            id="support-package-heading"
+            className="font-serif text-5xl font-bold mb-6 text-white"
+            style={{
+              textShadow: '0 0 10px rgba(255, 255, 255, 0.3)'
+            }}
+          >
+            What You Get: Complete Support for Success
+          </h2>
+          <motion.p 
+            className="text-xl max-w-4xl mx-auto leading-relaxed"
+            style={{
+              color: 'rgba(255, 255, 255, 0.9)',
+              textShadow: '0 0 10px rgba(255, 255, 255, 0.5)'
+            }}
+          >
+            Our comprehensive support system ensures you have everything needed to launch and grow
+            a thriving Soaring Center. From proven curriculum to marketing power, we've got you covered.
+          </motion.p>
+        </AnimatedSection>
 
-        .flag-card:nth-child(1) { animation-delay: 0.1s; }
-        .flag-card:nth-child(2) { animation-delay: 0.2s; }
-        .flag-card:nth-child(3) { animation-delay: 0.3s; }
-        .flag-card:nth-child(4) { animation-delay: 0.4s; }
+        {/* Demo controls */}
+        <div className="text-center mb-10">
+          <button 
+            className="bg-transparent text-white border-2 border-white/80 px-6 py-3 rounded-lg font-semibold mr-4 transition-all hover:bg-white/10 focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-transparent"
+            onClick={expandAll}
+            aria-label="Expand all support pillar cards"
+            style={{
+              boxShadow: '0 0 20px rgba(255, 255, 255, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1)',
+              textShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(5px)'
+            }}
+          >
+            Expand All Cards
+          </button>
+          <button 
+            className="bg-transparent text-white border-2 border-white/80 px-6 py-3 rounded-lg font-semibold transition-all hover:bg-white/10 focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-transparent"
+            onClick={collapseAll}
+            aria-label="Collapse all support pillar cards"
+            style={{
+              boxShadow: '0 0 20px rgba(255, 255, 255, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1)',
+              textShadow: '0 0 10px rgba(255, 255, 255, 0.8)',
+              backdropFilter: 'blur(5px)'
+            }}
+          >
+            Collapse All Cards
+          </button>
+        </div>
 
-        .flag-card:hover {
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
+        {/* Four-Column Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16" role="list" aria-label="Support pillars">
+          {supportPillars.map((pillar, index) => (
+            <motion.div 
+              key={pillar.id}
+              role="listitem"
+              className={`relative bg-white rounded-xl shadow-lg transition-all duration-300 cursor-pointer overflow-hidden group ${
+                expandedCards.has(index) ? 'ring-4 ring-patriot shadow-2xl' : 'hover:shadow-xl'
+              }`}
+              onClick={() => toggleCard(index)}
+              onKeyDown={(e) => handleKeydown(e, index)}
+              tabIndex={0}
+              aria-expanded={expandedCards.has(index)}
+              aria-label={`${pillar.title} support details`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, delay: index * 0.1 }}
+            >
+              {/* Flag stripe pattern (hidden initially, shown on expand) */}
+              {expandedCards.has(index) && !prefersReducedMotion && (
+                <motion.div
+                  className="absolute inset-0 pointer-events-none"
+                  initial={{ opacity: 0, scaleY: 0 }}
+                  animate={{ opacity: 0.08, scaleY: 1 }}
+                  transition={{ duration: 0.6, ease: "easeOut" }}
+                  style={{
+                    background: 'repeating-linear-gradient(to bottom, #B22234 0%, #B22234 7.69%, #FFFFFF 7.69%, #FFFFFF 15.38%)',
+                    transformOrigin: 'top'
+                  }}
+                />
+              )}
+              
+              {/* Canton overlay for first card */}
+              {index === 0 && expandedCards.has(index) && !prefersReducedMotion && (
+                <motion.div
+                  className="absolute top-0 left-0 w-full h-[26.92%] bg-navy pointer-events-none"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.12 }}
+                  transition={{ duration: 0.3, delay: 0.3 }}
+                />
+              )}
 
-        .flag-card.expanded {
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-        }
+              <div className="relative z-10 p-6 bg-white/95">
+                {/* Card Header */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <h3 className="text-xl font-bold text-navy mb-1">{pillar.title}</h3>
+                    <p className="text-sm text-gray-600">{pillar.subtitle}</p>
+                  </div>
+                  <ChevronDown 
+                    className={`w-6 h-6 text-gray-400 transition-transform duration-300 ${
+                      expandedCards.has(index) ? 'rotate-180' : ''
+                    }`}
+                    aria-hidden="true"
+                  />
+                </div>
 
-        .flag-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            z-index: 0;
-            /* Start with scaleY(0) for vertical reveal */
-            transform: scaleY(0);
-            transform-origin: top;
-            opacity: 0;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
-                        opacity 0.3s ease-in-out;
-            /* Base flag stripes */
-            background-image: repeating-linear-gradient(
-                to bottom,
-                #B22234 0%,
-                #B22234 7.69%,
-                #FFFFFF 7.69%,
-                #FFFFFF 15.38%
-            );
-        }
+                {/* Highlights */}
+                <div className="space-y-2" role="list" aria-label={`${pillar.title} highlights`}>
+                  {pillar.highlights.map((highlight, idx) => (
+                    <motion.div 
+                      key={idx}
+                      role="listitem"
+                      className="flex items-center gap-2 text-sm text-gray-700"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={prefersReducedMotion ? { duration: 0 } : { delay: idx * 0.05 }}
+                    >
+                      <Sparkles className="w-4 h-4 text-yellow-500" aria-hidden="true" />
+                      <span>{highlight}</span>
+                    </motion.div>
+                  ))}
+                </div>
 
-        /* Reveal flag when card is expanded */
-        .flag-card.expanded::before {
-            transform: scaleY(1);
-            opacity: 1;
-        }
+                {/* Expanded Content */}
+                <motion.div
+                  className="overflow-hidden"
+                  initial={false}
+                  animate={{ 
+                    height: expandedCards.has(index) ? 'auto' : 0,
+                    marginTop: expandedCards.has(index) ? 20 : 0
+                  }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="border-t pt-5">
+                    {/* Included Features */}
+                    <div className="mb-6">
+                      <h4 className="font-semibold text-navy mb-3 flex items-center gap-2">
+                        <CheckCircle className="w-5 h-5 text-green-500" aria-hidden="true" />
+                        Included in Partnership
+                      </h4>
+                      <div className="space-y-2" role="list">
+                        {pillar.features.included.map((feature, idx) => (
+                          <div key={idx} role="listitem" className="flex items-start gap-2 text-sm text-gray-700">
+                            <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                            <span>{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
 
-        /* Position each card's flag segment using background-position */
-        .flag-card-0::before {
-            background-position: 0 0;
-        }
+                    {/* Additional Features */}
+                    <div>
+                      <h4 className="font-semibold text-navy mb-3 flex items-center gap-2">
+                        <Sparkles className="w-5 h-5 text-yellow-500" aria-hidden="true" />
+                        Available Add-Ons
+                      </h4>
+                      <div className="space-y-2" role="list">
+                        {pillar.features.additional.map((feature, idx) => (
+                          <div key={idx} role="listitem" className="flex items-start gap-2 text-sm text-gray-700">
+                            <Sparkles className="w-4 h-4 text-yellow-500 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                            <span>{feature}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
 
-        .flag-card-1::before {
-            background-position: -100% 0;
-        }
-
-        .flag-card-2::before {
-            background-position: -200% 0;
-        }
-
-        .flag-card-3::before {
-            background-position: -300% 0;
-        }
-
-        /* Canton overlay for first card only */
-        .flag-card-0::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 26.92%;
-            background-color: #3C3B6E;
-            z-index: 1;
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .flag-card-0.expanded::after {
-            opacity: 1;
-        }
-
-        /* Stars in canton (using CSS content for simplicity) */
-        .canton-stars {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 26.92%;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-            padding: 8px 12px;
-            opacity: 0;
-            transition: opacity 0.4s ease-in-out 0.5s;
-        }
-
-        .flag-card-0.expanded .canton-stars {
-            opacity: 1;
-        }
-
-        .star-row {
-            display: flex;
-            justify-content: space-evenly;
-            width: 100%;
-        }
-
-        .star-row.offset {
-            padding: 0 8%;
-        }
-
-        .star {
-            color: white;
-            font-size: 0.4rem;
-            animation: twinkle 3s ease-in-out infinite;
-        }
-
-        .star:nth-child(even) {
-            animation-delay: 0.5s;
-        }
-
-        @media (min-width: 768px) {
-            .star {
-                font-size: 0.5rem;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .star {
-                font-size: 0.6rem;
-            }
-            .canton-stars {
-                padding: 6px 10px;
-            }
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.8; }
-            50% { opacity: 1; }
-        }
-
-        /* Content overlay to ensure readability */
-        .flag-content-wrapper {
-            position: relative;
-            background-color: rgba(255, 255, 255, 0.95);
-            z-index: 10;
-            height: 100%;
-            transition: background-color 0.3s ease;
-            padding: 24px;
-            border-radius: 12px;
-        }
-
-        .flag-card.expanded .flag-content-wrapper {
-            background-color: rgba(255, 255, 255, 0.92);
-        }
-
-        /* Responsive grid adjustments */
-        @media (max-width: 1023px) {
-            /* On smaller screens, cards stack so flag segments don't align */
-            .flag-card::before {
-                background-size: 100% 100%;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            /* Full desktop: ensure flag segments align perfectly */
-            .flag-card::before {
-                width: 400%;
-                background-size: 400% 100%;
-            }
-        }
-
-        /* Card header */
-        .card-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 16px;
-        }
-
-        .card-header-text {
-            flex: 1;
-        }
-
-        .arrow-button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 4px;
-            transition: transform 0.3s ease;
-            color: #9ca3af;
-        }
-
-        .expanded .arrow-button {
-            transform: rotate(180deg);
-        }
-
-        h3 {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1e3a8a;
-            margin-bottom: 4px;
-        }
-
-        .card-subtitle {
-            font-size: 14px;
-            color: #6b7280;
-        }
-
-        .highlights {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 16px;
-        }
-
-        .highlight-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 14px;
-            color: #374151;
-        }
-
-        .sparkle {
-            color: #eab308;
-            font-size: 16px;
-        }
-
-        /* Expanded content */
-        .expanded-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.6s ease;
-            margin-top: 0;
-        }
-
-        .expanded .expanded-content {
-            max-height: 800px;
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid #e5e7eb;
-        }
-
-        .features-title {
-            font-weight: 600;
-            color: #1e3a8a;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 16px;
-        }
-
-        .features-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .feature-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            font-size: 14px;
-            color: #374151;
-        }
-
-        .check-icon {
-            color: #10b981;
-            flex-shrink: 0;
-            margin-top: 2px;
-            font-size: 14px;
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Demo controls */
-        .demo-controls {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
-            background: transparent;
-            border-radius: 12px;
-        }
-
-        .demo-button {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.8);
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin: 0 8px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 
-                        inset 0 0 20px rgba(255, 255, 255, 0.1);
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(5px);
-        }
-
-        .demo-button:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateY(-1px);
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 
-                        0 4px 6px rgba(0, 0, 0, 0.1),
-                        inset 0 0 20px rgba(255, 255, 255, 0.2);
-            border-color: white;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 1);
-        }
-
-        .demo-button:active {
-            transform: translateY(0);
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.6), 
-                        inset 0 0 20px rgba(255, 255, 255, 0.15);
-        }
-
-        /* Focus styles for accessibility */
-        .flag-card:focus-visible {
-            outline: 2px solid #3C3B6E;
-            outline-offset: 2px;
-        }
-      `}</style>
-
-      <section className="py-20">
-        <div className="container mx-auto px-4">
-          {/* Header */}
-          <AnimatedSection className="text-center mb-16">
-            <h2 
-              className="font-serif text-5xl font-bold mb-6"
+        {/* Comprehensive Coverage Visual */}
+        <AnimatedSection delay={0.5}>
+          <div className="bg-transparent backdrop-blur-sm rounded-2xl p-8 lg:p-12 border-2 border-white/30" 
+               style={{ 
+                 boxShadow: '0 0 30px rgba(255, 255, 255, 0.2), inset 0 0 30px rgba(255, 255, 255, 0.1)' 
+               }}>
+            <h3 
+              className="text-3xl font-bold text-center mb-12 text-white"
               style={{
-                color: 'white',
                 textShadow: '0 0 10px rgba(255, 255, 255, 0.3)'
               }}
             >
-              What You Get: Complete Support for Success
-            </h2>
-            <motion.p 
-              className="text-xl max-w-4xl mx-auto leading-relaxed"
-              style={{
-                color: 'rgba(255, 255, 255, 0.9)',
-                textShadow: '0 0 10px rgba(255, 255, 255, 0.5)'
-              }}
-            >
-              Our comprehensive support system ensures you have everything needed to launch and grow
-              a thriving Soaring Center. From proven curriculum to marketing power, we've got you covered.
-            </motion.p>
-          </AnimatedSection>
-
-          {/* Demo controls */}
-          <div className="demo-controls">
-            <button className="demo-button" onClick={expandAll}>Expand All Cards</button>
-            <button className="demo-button" onClick={collapseAll}>Collapse All Cards</button>
-          </div>
-
-          {/* Four-Column Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
-            {supportPillars.map((pillar, index) => (
-              <div 
-                key={pillar.id}
-                className={`flag-card flag-card-${index} ${expandedCards.has(index) ? 'expanded' : ''}`}
-                onClick={() => toggleCard(index)}
-                tabIndex={0}
-                onKeyDown={(e) => handleKeydown(e, index)}
-                role="button"
-                aria-expanded={expandedCards.has(index)}
-              >
-                {/* Canton stars for first card - 50 stars in 9 rows */}
-                {index === 0 && (
-                  <div className="canton-stars">
-                    <div className="star-row">
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                    </div>
-                    <div className="star-row offset">
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                      <span className="star">★</span><span className="star">★</span>
-                    </div>
-                    <div className="star-row">
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                    </div>
-                    <div className="star-row offset">
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                      <span className="star">★</span><span className="star">★</span>
-                    </div>
-                    <div className="star-row">
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                    </div>
-                    <div className="star-row offset">
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                      <span className="star">★</span><span className="star">★</span>
-                    </div>
-                    <div className="star-row">
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                    </div>
-                    <div className="star-row offset">
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                      <span className="star">★</span><span className="star">★</span>
-                    </div>
-                    <div className="star-row">
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                      <span className="star">★</span><span className="star">★</span><span className="star">★</span>
-                    </div>
-                  </div>
-                )}
-
-                <div className="flag-content-wrapper">
-                  <div className="card-header">
-                    <div className="card-header-text">
-                      <h3>{pillar.title}</h3>
-                      <p className="card-subtitle">{pillar.subtitle}</p>
-                    </div>
-                    <button className="arrow-button" aria-hidden="true">
-                      <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M7 10l5 5 5-5z"/>
-                      </svg>
-                    </button>
-                  </div>
-                  <div className="highlights">
-                    {pillar.highlights.map((highlight, idx) => (
-                      <div key={idx} className="highlight-item">
-                        <span className="sparkle">✨</span>
-                        <span>{highlight}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="expanded-content">
-                    <div className="features-section">
-                      <h4 className="features-title">
-                        <span className="check-icon">✓</span>
-                        Included in Partnership
-                      </h4>
-                      <div className="features-list">
-                        {pillar.features.included.map((feature, idx) => (
-                          <div key={idx} className="feature-item">
-                            <span className="check-icon">✓</span>
-                            <span>{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                    <div className="add-ons-section">
-                      <h4 className="features-title">
-                        <span className="sparkle">✨</span>
-                        Available Add-Ons
-                      </h4>
-                      <div className="features-list">
-                        {pillar.features.additional.map((feature, idx) => (
-                          <div key={idx} className="feature-item">
-                            <span className="sparkle">✨</span>
-                            <span>{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-
-
-          {/* Comprehensive Coverage Visual */}
-          <AnimatedSection delay={0.5}>
-            <div className="bg-transparent backdrop-blur-sm rounded-2xl p-8 lg:p-12 border-2 border-white/30" 
-                 style={{ 
-                   boxShadow: '0 0 30px rgba(255, 255, 255, 0.2), inset 0 0 30px rgba(255, 255, 255, 0.1)' 
-                 }}>
-              <h3 
-                className="text-3xl font-bold text-center mb-12"
-                style={{
-                  color: 'white',
-                  textShadow: '0 0 10px rgba(255, 255, 255, 0.3)'
-                }}
-              >
-                360° Support Coverage
-              </h3>
-              
-              {/* Support Icons Grid */}
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 mb-12">
-                {[
-                  { icon: Users, label: 'Community' },
-                  { icon: LineChart, label: 'Analytics' },
-                  { icon: Shield, label: 'Compliance' },
-                  { icon: Laptop, label: 'Technology' },
-                  { icon: Award, label: 'Quality' },
-                  { icon: MessageSquare, label: 'Support' },
-                  { icon: Calendar, label: 'Events' },
-                  { icon: FileText, label: 'Resources' },
-                  { icon: Palette, label: 'Branding' },
-                  { icon: Globe, label: 'Network' },
-                  { icon: BookOpen, label: 'Curriculum' },
-                  { icon: Briefcase, label: 'Business' }
-                ].map((item, index) => (
+              360° Support Coverage
+            </h3>
+            
+            {/* Support Icons Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 mb-12" role="list" aria-label="Support coverage areas">
+              {supportIcons.map((item, index) => {
+                const Icon = item.icon;
+                return (
                   <motion.div
                     key={index}
+                    role="listitem"
                     className="flex flex-col items-center"
                     initial={{ opacity: 0, scale: 0.8 }}
                     whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: index * 0.05 }}
+                    transition={prefersReducedMotion ? { duration: 0 } : { delay: index * 0.05 }}
                     viewport={{ once: true }}
                   >
                     <div className="w-16 h-16 bg-transparent rounded-full flex items-center justify-center mb-2 border-2 border-white/80"
@@ -701,49 +395,51 @@ const SupportPackageSection = () => {
                            boxShadow: '0 0 20px rgba(255, 255, 255, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.1)',
                            backdropFilter: 'blur(5px)'
                          }}>
-                      <item.icon className="w-8 h-8" style={{ 
-                        color: 'white',
+                      <Icon className="w-8 h-8 text-white" style={{ 
                         filter: 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.8))'
-                      }} />
+                      }} 
+                      aria-hidden="true" />
                     </div>
                     <span className="text-sm font-medium" style={{
                       color: 'rgba(255, 255, 255, 0.9)',
                       textShadow: '0 0 8px rgba(255, 255, 255, 0.5)'
                     }}>{item.label}</span>
                   </motion.div>
-                ))}
-              </div>
-
-              {/* Value Proposition */}
-              <div className="text-center">
-                <motion.p 
-                  className="text-xl font-semibold mb-4"
-                  style={{
-                    color: 'white',
-                    textShadow: '0 0 15px rgba(255, 255, 255, 0.8)'
-                  }}
-                >
-                  Total Partnership Value: <span 
-                    className="text-3xl"
-                    style={{
-                      color: 'white',
-                      textShadow: '0 0 10px rgba(255, 255, 255, 0.5)'
-                    }}
-                  >$250,000+</span>
-                </motion.p>
-                <p className="max-w-2xl mx-auto" style={{
-                  color: 'rgba(255, 255, 255, 0.9)',
-                  textShadow: '0 0 10px rgba(255, 255, 255, 0.5)'
-                }}>
-                  Access resources and support that would cost over a quarter million dollars to develop independently, 
-                  all included in your partnership.
-                </p>
-              </div>
+                );
+              })}
             </div>
-          </AnimatedSection>
-        </div>
-      </section>
-    </>
+
+            {/* Value Proposition */}
+            <div className="text-center">
+              <motion.p 
+                className="text-xl font-semibold mb-4 text-white"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6 }}
+                viewport={{ once: true }}
+                style={{
+                  textShadow: '0 0 15px rgba(255, 255, 255, 0.8)'
+                }}
+              >
+                Total Partnership Value: <span 
+                  className="text-3xl text-white"
+                  style={{
+                    textShadow: '0 0 10px rgba(255, 255, 255, 0.5)'
+                  }}
+                >$250,000+</span>
+              </motion.p>
+              <p className="max-w-2xl mx-auto" style={{
+                color: 'rgba(255, 255, 255, 0.9)',
+                textShadow: '0 0 10px rgba(255, 255, 255, 0.5)'
+              }}>
+                Access resources and support that would cost over a quarter million dollars to develop independently, 
+                all included in your partnership.
+              </p>
+            </div>
+          </div>
+        </AnimatedSection>
+      </div>
+    </section>
   );
 };
 

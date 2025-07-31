@@ -2,11 +2,27 @@
 
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { AlertTriangle, Lightbulb, Rocket, Star } from 'lucide-react';
+import { AlertTriangle, Lightbulb, Rocket, Star, LucideIcon } from 'lucide-react';
 import AnimatedSection from '@/components/ui/animated-section';
+import { usePrefersReducedMotion } from '@/hooks';
 
-const OurStorySection = () => {
-  const timelineItems = [
+interface TimelineItem {
+  icon: LucideIcon;
+  title: string;
+  year: string;
+  description: string;
+  color: string;
+}
+
+interface MissionPillar {
+  title: string;
+  description: string;
+}
+
+const OurStorySection: React.FC = () => {
+  const prefersReducedMotion = usePrefersReducedMotion();
+
+  const timelineItems: TimelineItem[] = [
     {
       icon: AlertTriangle,
       title: "The Problem Identified",
@@ -37,11 +53,58 @@ const OurStorySection = () => {
     }
   ];
 
+  const missionPillars: MissionPillar[] = [
+    {
+      title: "Academic Excellence",
+      description: "Rigorous classical education that develops critical thinking and intellectual curiosity"
+    },
+    {
+      title: "Spiritual Formation",
+      description: "Biblical worldview integration that shapes character and faith"
+    },
+    {
+      title: "Real-World Impact",
+      description: "Practical preparation for leadership and service in every sphere of life"
+    }
+  ];
+
+  const cardVariants = {
+    hidden: { opacity: 0, x: 0 },
+    visibleLeft: { opacity: 1, x: 0 },
+    visibleRight: { opacity: 1, x: 0 }
+  };
+
+  const nodeVariants = {
+    hidden: { opacity: 0, scale: 0 },
+    visible: { opacity: 1, scale: 1 }
+  };
+
+  const pillarVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 }
+  };
+
+  const pulseAnimation = prefersReducedMotion
+    ? {}
+    : {
+        boxShadow: [
+          "0 0 0 0 rgba(178, 34, 52, 0.3)",
+          "0 0 0 10px rgba(178, 34, 52, 0)",
+          "0 0 0 0 rgba(178, 34, 52, 0.3)"
+        ]
+      };
+
   return (
-    <section className="py-20 bg-white">
+    <section 
+      className="py-20 bg-white"
+      aria-labelledby="our-story-heading"
+    >
       <div className="container mx-auto px-4">
         <AnimatedSection className="text-center mb-16">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold text-navy mb-6">
+          <h2 
+            id="our-story-heading"
+            className="font-serif text-4xl md:text-5xl font-bold text-navy mb-6"
+          >
             Why We Exist
           </h2>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
@@ -51,77 +114,103 @@ const OurStorySection = () => {
         </AnimatedSection>
 
         {/* Interactive Timeline */}
-        <div className="relative max-w-4xl mx-auto">
+        <div 
+          className="relative max-w-4xl mx-auto"
+          role="region"
+          aria-labelledby="timeline-heading"
+        >
+          <h3 id="timeline-heading" className="sr-only">Our Journey Timeline</h3>
+          
           {/* Timeline Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-red-200 via-yellow-200 via-blue-200 to-patriot-200 rounded-full" />
+          <div 
+            className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-red-200 via-yellow-200 via-blue-200 to-patriot-200 rounded-full" 
+            aria-hidden="true"
+          />
 
-          {timelineItems.map((item, index) => (
-            <AnimatedSection key={index} delay={index * 0.2}>
-              <div className={`flex items-center mb-16 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
-                {/* Content Card */}
-                <motion.div 
-                  className="w-5/12"
-                  initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.2 }}
-                  viewport={{ once: true }}
-                >
-                  <Card className="hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-white to-gray-50">
-                    <CardContent className="p-6">
-                      <div className="flex items-center mb-4">
-                        <motion.div 
-                          className={`w-12 h-12 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center mr-4`}
-                          whileHover={{ scale: 1.1, rotate: 360 }}
-                          transition={{ duration: 0.6 }}
-                        >
-                          <item.icon className="w-6 h-6 text-white" />
-                        </motion.div>
-                        <div>
-                          <h3 className="font-serif text-2xl font-bold text-navy">
-                            {item.title}
-                          </h3>
-                          <span className="text-patriot font-semibold">{item.year}</span>
-                        </div>
-                      </div>
-                      <p className="text-gray-600 leading-relaxed">
-                        {item.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </motion.div>
+          <ol className="list-none">
+            {timelineItems.map((item, index) => {
+              const Icon = item.icon;
+              const isEven = index % 2 === 0;
+              
+              return (
+                <AnimatedSection key={index} delay={index * 0.2}>
+                  <li className={`flex items-center mb-16 ${isEven ? 'flex-row' : 'flex-row-reverse'}`}>
+                    {/* Content Card */}
+                    <motion.div 
+                      className="w-5/12"
+                      initial="hidden"
+                      whileInView={isEven ? "visibleLeft" : "visibleRight"}
+                      variants={{
+                        hidden: { opacity: 0, x: isEven ? -50 : 50 },
+                        visibleLeft: { opacity: 1, x: 0 },
+                        visibleRight: { opacity: 1, x: 0 }
+                      }}
+                      transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.8, delay: index * 0.2 }}
+                      viewport={{ once: true }}
+                    >
+                      <Card className="hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-white to-gray-50 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-navy">
+                        <CardContent className="p-6">
+                          <div className="flex items-center mb-4">
+                            <motion.div 
+                              className={`w-12 h-12 rounded-full bg-gradient-to-r ${item.color} flex items-center justify-center mr-4`}
+                              whileHover={prefersReducedMotion ? {} : { scale: 1.1, rotate: 360 }}
+                              transition={{ duration: 0.6 }}
+                              role="presentation"
+                            >
+                              <Icon className="w-6 h-6 text-white" aria-hidden="true" />
+                            </motion.div>
+                            <div>
+                              <h4 className="font-serif text-2xl font-bold text-navy">
+                                {item.title}
+                              </h4>
+                              <time className="text-patriot font-semibold">{item.year}</time>
+                            </div>
+                          </div>
+                          <p className="text-gray-600 leading-relaxed">
+                            {item.description}
+                          </p>
+                        </CardContent>
+                      </Card>
+                    </motion.div>
 
-                {/* Timeline Node */}
-                <motion.div 
-                  className="w-2/12 flex justify-center"
-                  initial={{ opacity: 0, scale: 0 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: index * 0.2 + 0.3 }}
-                  viewport={{ once: true }}
-                >
-                  <motion.div 
-                    className={`w-8 h-8 rounded-full bg-gradient-to-r ${item.color} border-4 border-white shadow-lg relative z-10`}
-                    animate={{
-                      boxShadow: [
-                        "0 0 0 0 rgba(178, 34, 52, 0.3)",
-                        "0 0 0 10px rgba(178, 34, 52, 0)",
-                        "0 0 0 0 rgba(178, 34, 52, 0.3)"
-                      ]
-                    }}
-                    transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, delay: index * 0.5 }}
-                  />
-                </motion.div>
+                    {/* Timeline Node */}
+                    <motion.div 
+                      className="w-2/12 flex justify-center"
+                      variants={nodeVariants}
+                      initial="hidden"
+                      whileInView="visible"
+                      transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, delay: index * 0.2 + 0.3 }}
+                      viewport={{ once: true }}
+                    >
+                      <motion.div 
+                        className={`w-8 h-8 rounded-full bg-gradient-to-r ${item.color} border-4 border-white shadow-lg relative z-10`}
+                        animate={pulseAnimation}
+                        transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
+                        role="presentation"
+                        aria-label={`Timeline marker for ${item.year}`}
+                      />
+                    </motion.div>
 
-                {/* Spacer */}
-                <div className="w-5/12" />
-              </div>
-            </AnimatedSection>
-          ))}
+                    {/* Spacer */}
+                    <div className="w-5/12" aria-hidden="true" />
+                  </li>
+                </AnimatedSection>
+              );
+            })}
+          </ol>
         </div>
 
         {/* Mission Statement */}
         <AnimatedSection delay={0.8} className="mt-16">
-          <div className="bg-gradient-to-r from-navy-50 to-patriot-50 rounded-2xl p-8 text-center border border-gray-200">
-            <h3 className="font-serif text-3xl font-bold text-navy mb-6">
+          <div 
+            className="bg-gradient-to-r from-navy-50 to-patriot-50 rounded-2xl p-8 text-center border border-gray-200"
+            role="region"
+            aria-labelledby="mission-statement-heading"
+          >
+            <h3 
+              id="mission-statement-heading"
+              className="font-serif text-3xl font-bold text-navy mb-6"
+            >
               Our Mission Today
             </h3>
             <blockquote className="text-xl md:text-2xl text-gray-700 italic font-medium mb-6 max-w-4xl mx-auto leading-relaxed">
@@ -129,28 +218,21 @@ const OurStorySection = () => {
               faithful hearts, and prepares students to make a lasting impact in their communities 
               and the world."
             </blockquote>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
-              {[
-                {
-                  title: "Academic Excellence",
-                  description: "Rigorous classical education that develops critical thinking and intellectual curiosity"
-                },
-                {
-                  title: "Spiritual Formation",
-                  description: "Biblical worldview integration that shapes character and faith"
-                },
-                {
-                  title: "Real-World Impact",
-                  description: "Practical preparation for leadership and service in every sphere of life"
-                }
-              ].map((pillar, index) => (
+            <div 
+              className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8"
+              role="list"
+              aria-label="Mission pillars"
+            >
+              {missionPillars.map((pillar, index) => (
                 <motion.div
                   key={index}
                   className="text-center"
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  variants={pillarVariants}
+                  initial="hidden"
+                  whileInView="visible"
+                  transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, delay: index * 0.1 }}
                   viewport={{ once: true }}
+                  role="listitem"
                 >
                   <h4 className="font-semibold text-lg text-navy mb-2">{pillar.title}</h4>
                   <p className="text-gray-600 text-sm leading-relaxed">{pillar.description}</p>

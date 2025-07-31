@@ -16,15 +16,51 @@ import {
   Calculator,
   ArrowUpRight,
   BarChart3,
-  Target
+  Target,
+  LucideIcon
 } from 'lucide-react';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+
+// TypeScript interfaces
+interface MarketStat {
+  icon: LucideIcon;
+  value: string;
+  label: string;
+  subtext: string;
+  color: string;
+  hasStars: boolean;
+  hasStripes?: boolean;
+}
+
+interface MarketForce {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+interface ROICalculation {
+  actualStudents: number;
+  annualRevenue: number;
+  netIncome: number;
+  monthlyIncome: number;
+  breakEvenMonth: number;
+}
+
+interface ValidationMetric {
+  icon: LucideIcon;
+  title: string;
+  description: string;
+}
+
+type ScenarioType = 'conservative' | 'optimistic';
 
 const MarketOpportunitySection = () => {
   const [students, setStudents] = useState(60);
   const [tuition, setTuition] = useState(5500);
-  const [scenario, setScenario] = useState('conservative');
+  const [scenario, setScenario] = useState<ScenarioType>('conservative');
+  const prefersReducedMotion = usePrefersReducedMotion();
 
-  const marketStats = [
+  const marketStats: MarketStat[] = [
     {
       icon: TrendingUp,
       value: "300%",
@@ -61,7 +97,7 @@ const MarketOpportunitySection = () => {
     }
   ];
 
-  const marketForces = [
+  const marketForces: MarketForce[] = [
     {
       icon: Home,
       title: "Remote Work Revolution",
@@ -84,7 +120,25 @@ const MarketOpportunitySection = () => {
     }
   ];
 
-  const calculateROI = () => {
+  const validationMetrics: ValidationMetric[] = [
+    {
+      icon: BarChart3,
+      title: "Existing Centers Thriving",
+      description: "Average 85% capacity within first year"
+    },
+    {
+      icon: Target,
+      title: "High Parent Satisfaction",
+      description: "92% retention rate year-over-year"
+    },
+    {
+      icon: MapPin,
+      title: "Geographic Opportunity",
+      description: "Less than 13% market penetration nationally"
+    }
+  ];
+
+  const calculateROI = (): ROICalculation => {
     const enrollmentRate = scenario === 'conservative' ? 0.85 : 0.95;
     const actualStudents = Math.floor(students * enrollmentRate);
     const annualRevenue = actualStudents * tuition;
@@ -104,159 +158,57 @@ const MarketOpportunitySection = () => {
   const roi = calculateROI();
 
   return (
-    <>
-      <style jsx={true} global={true}>{`
-        @keyframes twinkle {
-          0%, 100% { 
-            opacity: 0.5; 
-            transform: scale(1);
-            filter: brightness(1);
-          }
-          50% { 
-            opacity: 1; 
-            transform: scale(1.2);
-            filter: brightness(1.5);
-          }
-        }
-        
-        @keyframes floatUp {
-          0% {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        
-        .star-background {
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          overflow: hidden;
-          border-radius: 12px;
-          transition: opacity 0.3s ease;
-          pointer-events: none;
-        }
-        
-        .star-pattern {
-          position: absolute;
-          color: rgba(255, 255, 255, 0.15);
-          font-size: 24px;
-          animation: twinkle 4s ease-in-out infinite;
-          text-shadow: 0 0 8px rgba(255, 255, 255, 0.3), 0 0 16px rgba(255, 255, 255, 0.15);
-          transition: opacity 0.3s ease;
-        }
-        
-        .star-pattern:nth-child(odd) {
-          animation-delay: 0s;
-        }
-        
-        .star-pattern:nth-child(even) {
-          animation-delay: 2s;
-        }
-        
-        .star-pattern:nth-child(3n) {
-          animation-delay: 1s;
-          font-size: 18px;
-          color: rgba(255, 255, 255, 0.1);
-        }
-        
-        .star-pattern:nth-child(5n) {
-          animation-delay: 3s;
-          font-size: 30px;
-          color: rgba(255, 255, 255, 0.2);
-          text-shadow: 0 0 10px rgba(255, 255, 255, 0.4), 0 0 20px rgba(255, 255, 255, 0.2);
-        }
-        
-        .star-pattern:nth-child(7n) {
-          animation-delay: 1.5s;
-          font-size: 14px;
-          color: rgba(255, 255, 255, 0.08);
-        }
-        
-        .animate-float-up {
-          animation: floatUp 0.6s ease-out forwards;
-        }
-        
-        /* Custom range input styles */
-        input[type="range"]::-webkit-slider-thumb {
-          appearance: none;
-          width: 20px;
-          height: 20px;
-          background: white;
-          border-radius: 50%;
-          cursor: pointer;
-          box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
-          transition: all 0.2s ease;
-        }
-        
-        input[type="range"]::-webkit-slider-thumb:hover {
-          box-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.6);
-          transform: scale(1.1);
-        }
-        
-        input[type="range"]::-moz-range-thumb {
-          width: 20px;
-          height: 20px;
-          background: white;
-          border-radius: 50%;
-          cursor: pointer;
-          box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 255, 255, 0.4);
-          transition: all 0.2s ease;
-          border: none;
-        }
-        
-        input[type="range"]::-moz-range-thumb:hover {
-          box-shadow: 0 0 15px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 0.6);
-          transform: scale(1.1);
-        }
-      `}</style>
-      
-      <section className="py-20">
-        <div className="container mx-auto px-4" style={{ maxWidth: '1200px' }}>
-          {/* Header */}
-          <div className="text-center mb-16 animate-float-up">
-            <h2 
-              className="text-5xl font-bold mb-6" 
-              style={{ 
-                fontFamily: 'serif',
-                color: 'white',
-                textShadow: '0 0 10px rgba(255, 255, 255, 0.3)'
-              }}
-            >
-              The Market Opportunity
-            </h2>
-            <motion.p 
-              className="text-xl max-w-4xl mx-auto leading-relaxed"
-              style={{
-                color: 'rgba(255, 255, 255, 0.9)',
-                textShadow: '0 0 10px rgba(255, 255, 255, 0.5)'
-              }}
-            >
-              The education landscape is shifting dramatically. Growing demand for classical Christian education, 
-              coupled with expanding school choice programs, creates an unprecedented opportunity for Soaring Centers.
-            </motion.p>
-          </div>
+    <section className="py-20" aria-labelledby="market-opportunity-heading">
+      <div className="container mx-auto px-4" style={{ maxWidth: '1200px' }}>
+        {/* Header */}
+        <div className="text-center mb-16">
+          <motion.h2 
+            id="market-opportunity-heading"
+            className="text-5xl font-bold mb-6 font-serif text-white"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6 }}
+            style={{ 
+              textShadow: '0 0 10px rgba(255, 255, 255, 0.3)'
+            }}
+          >
+            The Market Opportunity
+          </motion.h2>
+          <motion.p 
+            className="text-xl max-w-4xl mx-auto leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, delay: 0.1 }}
+            style={{
+              color: 'rgba(255, 255, 255, 0.9)',
+              textShadow: '0 0 10px rgba(255, 255, 255, 0.5)'
+            }}
+          >
+            The education landscape is shifting dramatically. Growing demand for classical Christian education, 
+            coupled with expanding school choice programs, creates an unprecedented opportunity for Soaring Centers.
+          </motion.p>
+        </div>
 
-          {/* Market Trends Dashboard with Stars */}
-          <div className="flex justify-between items-start gap-2 md:gap-4 lg:gap-6 mb-16 overflow-x-auto">
-            {marketStats.map((stat, index) => (
+        {/* Market Trends Dashboard */}
+        <div className="flex justify-between items-start gap-2 md:gap-4 lg:gap-6 mb-16 overflow-x-auto" role="list" aria-label="Market statistics">
+          {marketStats.map((stat, index) => {
+            const Icon = stat.icon;
+            return (
               <motion.div 
-                key={index} 
-                className="flex-1 min-w-[140px] md:min-w-[180px] relative overflow-hidden rounded-xl transition-all duration-300 animate-float-up"
+                key={index}
+                role="listitem"
+                className="flex-1 min-w-[140px] md:min-w-[180px] relative overflow-hidden rounded-xl transition-all duration-300"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, delay: index * 0.1 }}
                 style={{ 
-                  animationDelay: `${index * 0.1}s`,
                   backgroundColor: stat.hasStars ? 'transparent' : 'white',
                   backgroundImage: stat.hasStripes ? 'repeating-linear-gradient(to bottom, #B22234 0px, #B22234 10px, #FFFFFF 10px, #FFFFFF 20px)' : 'none',
                   border: stat.hasStars ? '2px solid rgba(255, 255, 255, 0.8)' : 'none',
                   boxShadow: stat.hasStars ? '0 0 30px rgba(255, 255, 255, 0.5), inset 0 0 30px rgba(255, 255, 255, 0.1)' : '0 4px 6px rgba(0, 0, 0, 0.1)',
                   backdropFilter: stat.hasStars ? 'blur(10px)' : 'none'
                 }}
-                whileHover={stat.hasStars ? {
+                whileHover={prefersReducedMotion ? {} : stat.hasStars ? {
                   boxShadow: '0 0 40px rgba(255, 255, 255, 0.7), inset 0 0 40px rgba(255, 255, 255, 0.15)',
                   borderColor: 'rgba(255, 255, 255, 1)'
                 } : {
@@ -278,15 +230,17 @@ const MarketOpportunitySection = () => {
                       boxShadow: '0 0 15px rgba(255, 255, 255, 0.4), inset 0 0 10px rgba(255, 255, 255, 0.1)',
                       backdropFilter: 'blur(5px)'
                     } : {}}>
-                      <stat.icon className={`w-5 h-5 md:w-6 md:h-6 ${
+                      <Icon className={`w-5 h-5 md:w-6 md:h-6 ${
                         stat.hasStars ? '' : stat.hasStripes ? 'text-white' : stat.color
                       }`} style={stat.hasStars ? {
                         color: 'white',
                         filter: 'drop-shadow(0 0 8px rgba(255, 255, 255, 0.8))'
-                      } : {}} />
+                      } : {}} 
+                      aria-hidden="true" />
                     </div>
                     <ArrowUpRight className={`w-4 h-4 md:w-5 md:h-5 ${stat.hasStars ? '' : stat.hasStripes ? 'text-blue-900' : 'text-gray-400'}`} 
-                      style={stat.hasStars ? { color: 'rgba(255, 255, 255, 0.8)' } : {}} />
+                      style={stat.hasStars ? { color: 'rgba(255, 255, 255, 0.8)' } : {}}
+                      aria-hidden="true" />
                   </div>
                   <div className={`text-2xl md:text-3xl font-bold mb-1 ${stat.hasStars ? '' : stat.hasStripes ? 'text-blue-900' : stat.color}`}
                        style={stat.hasStars ? { 
@@ -308,72 +262,77 @@ const MarketOpportunitySection = () => {
                        } : {}}>
                     {stat.subtext}
                   </div>
-                  <div
+                  <motion.div
                     className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 to-red-800"
-                    style={{
-                      transform: `scaleX(1)`,
-                      transition: 'transform 1s ease-out',
-                      transitionDelay: `${index * 0.2}s`
-                    }}
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={prefersReducedMotion ? { duration: 0 } : { duration: 1, delay: index * 0.2 }}
                   />
                 </div>
               </motion.div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
 
-          {/* Market Forces with Star Background */}
-          <div className="relative bg-transparent backdrop-blur-md rounded-2xl p-8 lg:p-12 mb-16 overflow-hidden animate-float-up border-2 border-white/80" 
+        {/* Market Forces */}
+        <AnimatedSection delay={0.3}>
+          <div className="relative bg-transparent backdrop-blur-md rounded-2xl p-8 lg:p-12 mb-16 overflow-hidden border-2 border-white/80" 
                style={{ 
-                 animationDelay: '0.3s',
                  boxShadow: '0 0 40px rgba(255, 255, 255, 0.5), inset 0 0 40px rgba(255, 255, 255, 0.1)'
                }}>
             <h3 
-              className="text-3xl font-bold text-center mb-12 relative z-10"
+              className="text-3xl font-bold text-center mb-12 relative z-10 text-white"
               style={{
-                color: 'white',
                 textShadow: '0 0 10px rgba(255, 255, 255, 0.3)'
               }}
             >
               Market Forces Working in Your Favor
             </h3>
-            <div className="flex justify-between items-start gap-2 md:gap-4 lg:gap-8 relative z-10 overflow-x-auto">
-              {marketForces.map((force, index) => (
-                <div
-                  key={index}
-                  className="flex-1 min-w-[120px] md:min-w-[150px] text-center animate-float-up"
-                  style={{ animationDelay: `${0.4 + index * 0.1}s` }}
-                >
-                  <div className="w-16 h-16 bg-transparent rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 border-2 border-white/60"
-                       style={{
-                         boxShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
-                         backdropFilter: 'blur(5px)'
-                       }}>
-                    <force.icon className="w-8 h-8" style={{
-                      color: 'white',
-                      filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 0.4))'
-                    }} />
-                  </div>
-                  <h4 className="font-semibold text-sm md:text-lg mb-1 md:mb-2 px-1" style={{
-                    color: 'white',
-                    textShadow: '0 0 5px rgba(255, 255, 255, 0.3)'
-                  }}>{force.title}</h4>
-                  <p className="text-xs md:text-sm px-1 md:px-2" style={{
-                    color: 'rgba(255, 255, 255, 0.9)'
-                  }}>{force.description}</p>
-                </div>
-              ))}
+            <div className="flex justify-between items-start gap-2 md:gap-4 lg:gap-8 relative z-10 overflow-x-auto" role="list" aria-label="Market forces">
+              {marketForces.map((force, index) => {
+                const Icon = force.icon;
+                return (
+                  <motion.div
+                    key={index}
+                    role="listitem"
+                    className="flex-1 min-w-[120px] md:min-w-[150px] text-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="w-16 h-16 bg-transparent rounded-full flex items-center justify-center mx-auto mb-3 md:mb-4 border-2 border-white/60"
+                         style={{
+                           boxShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
+                           backdropFilter: 'blur(5px)'
+                         }}>
+                      <Icon className="w-8 h-8 text-white" style={{
+                        filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 0.4))'
+                      }} 
+                      aria-hidden="true" />
+                    </div>
+                    <h4 className="font-semibold text-sm md:text-lg mb-1 md:mb-2 px-1 text-white" style={{
+                      textShadow: '0 0 5px rgba(255, 255, 255, 0.3)'
+                    }}>{force.title}</h4>
+                    <p className="text-xs md:text-sm px-1 md:px-2" style={{
+                      color: 'rgba(255, 255, 255, 0.9)'
+                    }}>{force.description}</p>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
+        </AnimatedSection>
 
-          {/* ROI Calculator */}
-          <div className="overflow-hidden bg-transparent backdrop-blur-md rounded-2xl animate-float-up border-2 border-white/80" 
+        {/* ROI Calculator */}
+        <AnimatedSection delay={0.4}>
+          <div className="overflow-hidden bg-transparent backdrop-blur-md rounded-2xl border-2 border-white/80" 
                style={{ 
-                 animationDelay: '0.4s',
                  boxShadow: '0 0 40px rgba(255, 255, 255, 0.5), inset 0 0 40px rgba(255, 255, 255, 0.1)'
                }}>
             <div className="relative bg-transparent text-white p-8 overflow-hidden">
               <h3 className="text-3xl font-bold mb-2 flex items-center gap-3 relative z-10 text-white">
-                <Calculator className="w-8 h-8 text-white" />
+                <Calculator className="w-8 h-8 text-white" aria-hidden="true" />
                 Financial Opportunity Calculator
               </h3>
               <p className="text-blue-100 relative z-10">
@@ -382,30 +341,31 @@ const MarketOpportunitySection = () => {
             </div>
 
             <div className="relative p-8 bg-transparent">
-              
               {/* Input Controls */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 relative z-10">
                 {/* Student Capacity */}
                 <div>
-                  <label className="block text-sm font-semibold text-white mb-2">
+                  <label htmlFor="student-capacity" className="block text-sm font-semibold text-white mb-2">
                     Student Capacity
                   </label>
                   <div className="flex items-center gap-4">
                     <input
+                      id="student-capacity"
                       type="range"
                       min="40"
                       max="80"
                       value={students}
                       onChange={(e) => setStudents(Number(e.target.value))}
-                      className="flex-1 h-2 bg-blue-800/50 rounded-lg appearance-none cursor-pointer"
+                      className="flex-1 h-2 bg-blue-800/50 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"
                       style={{
                         background: `linear-gradient(to right, #ffffff 0%, #ffffff ${((students - 40) / 40) * 100}%, #1e3a8a40 ${((students - 40) / 40) * 100}%, #1e3a8a40 100%)`,
                         boxShadow: '0 0 8px rgba(255, 255, 255, 0.5), 0 0 12px rgba(255, 255, 255, 0.3)'
                       }}
+                      aria-label={`Student capacity: ${students} students`}
                     />
-                    <span className="text-2xl font-bold text-white w-12 text-right">{students}</span>
+                    <span className="text-2xl font-bold text-white w-12 text-right" aria-live="polite">{students}</span>
                   </div>
-                  <div className="flex justify-between text-xs text-blue-100 mt-1">
+                  <div className="flex justify-between text-xs text-blue-100 mt-1" aria-hidden="true">
                     <span>40</span>
                     <span>80</span>
                   </div>
@@ -413,28 +373,30 @@ const MarketOpportunitySection = () => {
 
                 {/* Average Tuition */}
                 <div>
-                  <label className="block text-sm font-semibold text-white mb-2">
+                  <label htmlFor="average-tuition" className="block text-sm font-semibold text-white mb-2">
                     Average Annual Tuition
                   </label>
                   <div className="flex items-center gap-4">
                     <input
+                      id="average-tuition"
                       type="range"
                       min="4000"
                       max="7000"
                       step="100"
                       value={tuition}
                       onChange={(e) => setTuition(Number(e.target.value))}
-                      className="flex-1 h-2 bg-blue-800/50 rounded-lg appearance-none cursor-pointer"
+                      className="flex-1 h-2 bg-blue-800/50 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"
                       style={{
                         background: `linear-gradient(to right, #ffffff 0%, #ffffff ${((tuition - 4000) / 3000) * 100}%, #1e3a8a40 ${((tuition - 4000) / 3000) * 100}%, #1e3a8a40 100%)`,
                         boxShadow: '0 0 8px rgba(255, 255, 255, 0.5), 0 0 12px rgba(255, 255, 255, 0.3)'
                       }}
+                      aria-label={`Average annual tuition: $${tuition.toLocaleString()}`}
                     />
-                    <span className="text-2xl font-bold text-white w-20 text-right">
+                    <span className="text-2xl font-bold text-white w-20 text-right" aria-live="polite">
                       ${tuition.toLocaleString()}
                     </span>
                   </div>
-                  <div className="flex justify-between text-xs text-blue-100 mt-1">
+                  <div className="flex justify-between text-xs text-blue-100 mt-1" aria-hidden="true">
                     <span>$4,000</span>
                     <span>$7,000</span>
                   </div>
@@ -442,40 +404,51 @@ const MarketOpportunitySection = () => {
 
                 {/* Scenario Toggle */}
                 <div>
-                  <label className="block text-sm font-semibold text-white mb-2">
-                    Projection Scenario
-                  </label>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setScenario('conservative')}
-                      className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${
-                        scenario === 'conservative' 
-                          ? 'bg-white text-blue-900' 
-                          : 'bg-blue-800/50 text-blue-100 hover:bg-blue-800/70'
-                      }`}
-                    >
-                      Conservative
-                    </button>
-                    <button
-                      onClick={() => setScenario('optimistic')}
-                      className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all ${
-                        scenario === 'optimistic' 
-                          ? 'bg-white text-blue-900' 
-                          : 'bg-blue-800/50 text-blue-100 hover:bg-blue-800/70'
-                      }`}
-                    >
-                      Optimistic
-                    </button>
-                  </div>
+                  <fieldset>
+                    <legend className="block text-sm font-semibold text-white mb-2">
+                      Projection Scenario
+                    </legend>
+                    <div className="flex gap-2" role="radiogroup">
+                      <button
+                        onClick={() => setScenario('conservative')}
+                        className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-transparent ${
+                          scenario === 'conservative' 
+                            ? 'bg-white text-blue-900' 
+                            : 'bg-blue-800/50 text-blue-100 hover:bg-blue-800/70'
+                        }`}
+                        role="radio"
+                        aria-checked={scenario === 'conservative'}
+                        aria-label="Conservative projection scenario"
+                      >
+                        Conservative
+                      </button>
+                      <button
+                        onClick={() => setScenario('optimistic')}
+                        className={`flex-1 py-2 px-4 rounded-lg font-medium transition-all focus:ring-2 focus:ring-offset-2 focus:ring-white focus:ring-offset-transparent ${
+                          scenario === 'optimistic' 
+                            ? 'bg-white text-blue-900' 
+                            : 'bg-blue-800/50 text-blue-100 hover:bg-blue-800/70'
+                        }`}
+                        role="radio"
+                        aria-checked={scenario === 'optimistic'}
+                        aria-label="Optimistic projection scenario"
+                      >
+                        Optimistic
+                      </button>
+                    </div>
+                  </fieldset>
                 </div>
               </div>
 
-              {/* Results Display with Stars */}
+              {/* Results Display */}
               <div className="relative bg-transparent rounded-xl p-6 overflow-hidden border-2 border-white/60"
                    style={{
                      boxShadow: '0 0 30px rgba(255, 255, 255, 0.3), inset 0 0 20px rgba(255, 255, 255, 0.1)',
                      backdropFilter: 'blur(10px)'
-                   }}>
+                   }}
+                   role="region"
+                   aria-label="Financial projection results"
+                   aria-live="polite">
                 <h4 className="text-xl font-semibold text-white mb-6 relative z-10">
                   Your Projected Financial Results
                 </h4>
@@ -516,85 +489,59 @@ const MarketOpportunitySection = () => {
               </div>
             </div>
           </div>
+        </AnimatedSection>
 
-          {/* Market Validation */}
-          <div className="relative bg-transparent backdrop-blur-md rounded-2xl p-8 lg:p-12 mt-16 overflow-hidden animate-float-up border-2 border-white/80" 
+        {/* Market Validation */}
+        <AnimatedSection delay={0.5}>
+          <div className="relative bg-transparent backdrop-blur-md rounded-2xl p-8 lg:p-12 mt-16 overflow-hidden border-2 border-white/80" 
                style={{ 
-                 animationDelay: '0.5s',
                  boxShadow: '0 0 40px rgba(255, 255, 255, 0.5), inset 0 0 40px rgba(255, 255, 255, 0.1)'
                }}>
             <h3 
-              className="text-3xl font-bold text-center mb-8 relative z-10"
+              className="text-3xl font-bold text-center mb-8 relative z-10 text-white"
               style={{
-                color: 'white',
                 textShadow: '0 0 10px rgba(255, 255, 255, 0.3)'
               }}
             >
               Proven Market Demand
             </h3>
-            <div className="flex justify-between items-start gap-2 md:gap-4 lg:gap-8 overflow-x-auto relative z-10">
-              <div className="flex-1 min-w-[140px] md:min-w-[180px] text-center animate-float-up" style={{ animationDelay: '0.6s' }}>
-                <div className="w-16 h-16 bg-transparent rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-white/60"
-                     style={{
-                       boxShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
-                       backdropFilter: 'blur(5px)'
-                     }}>
-                  <BarChart3 className="w-8 h-8" style={{
-                    color: 'white',
-                    filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 0.4))'
-                  }} />
-                </div>
-                <h4 className="font-semibold text-lg mb-2" style={{
-                  color: 'white',
-                  textShadow: '0 0 5px rgba(255, 255, 255, 0.3)'
-                }}>Existing Centers Thriving</h4>
-                <p className="text-sm" style={{
-                  color: 'rgba(255, 255, 255, 0.9)'
-                }}>Average 85% capacity within first year</p>
-              </div>
-              <div className="flex-1 min-w-[140px] md:min-w-[180px] text-center animate-float-up" style={{ animationDelay: '0.7s' }}>
-                <div className="w-16 h-16 bg-transparent rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-white/60"
-                     style={{
-                       boxShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
-                       backdropFilter: 'blur(5px)'
-                     }}>
-                  <Target className="w-8 h-8" style={{
-                    color: 'white',
-                    filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 0.4))'
-                  }} />
-                </div>
-                <h4 className="font-semibold text-lg mb-2" style={{
-                  color: 'white',
-                  textShadow: '0 0 5px rgba(255, 255, 255, 0.3)'
-                }}>High Parent Satisfaction</h4>
-                <p className="text-sm" style={{
-                  color: 'rgba(255, 255, 255, 0.9)'
-                }}>92% retention rate year-over-year</p>
-              </div>
-              <div className="flex-1 min-w-[140px] md:min-w-[180px] text-center animate-float-up" style={{ animationDelay: '0.8s' }}>
-                <div className="w-16 h-16 bg-transparent rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-white/60"
-                     style={{
-                       boxShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
-                       backdropFilter: 'blur(5px)'
-                     }}>
-                  <MapPin className="w-8 h-8" style={{
-                    color: 'white',
-                    filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 0.4))'
-                  }} />
-                </div>
-                <h4 className="font-semibold text-lg mb-2" style={{
-                  color: 'white',
-                  textShadow: '0 0 5px rgba(255, 255, 255, 0.3)'
-                }}>Geographic Opportunity</h4>
-                <p className="text-sm" style={{
-                  color: 'rgba(255, 255, 255, 0.9)'
-                }}>Less than 13% market penetration nationally</p>
-              </div>
+            <div className="flex justify-between items-start gap-2 md:gap-4 lg:gap-8 overflow-x-auto relative z-10" role="list" aria-label="Market validation metrics">
+              {validationMetrics.map((metric, index) => {
+                const Icon = metric.icon;
+                return (
+                  <motion.div 
+                    key={index}
+                    role="listitem"
+                    className="flex-1 min-w-[140px] md:min-w-[180px] text-center"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={prefersReducedMotion ? { duration: 0 } : { duration: 0.6, delay: index * 0.1 }}
+                    viewport={{ once: true }}
+                  >
+                    <div className="w-16 h-16 bg-transparent rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-white/60"
+                         style={{
+                           boxShadow: '0 0 10px rgba(255, 255, 255, 0.3)',
+                           backdropFilter: 'blur(5px)'
+                         }}>
+                      <Icon className="w-8 h-8 text-white" style={{
+                        filter: 'drop-shadow(0 0 5px rgba(255, 255, 255, 0.4))'
+                      }}
+                      aria-hidden="true" />
+                    </div>
+                    <h4 className="font-semibold text-lg mb-2 text-white" style={{
+                      textShadow: '0 0 5px rgba(255, 255, 255, 0.3)'
+                    }}>{metric.title}</h4>
+                    <p className="text-sm" style={{
+                      color: 'rgba(255, 255, 255, 0.9)'
+                    }}>{metric.description}</p>
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
-        </div>
-      </section>
-    </>
+        </AnimatedSection>
+      </div>
+    </section>
   );
 };
 
