@@ -37,7 +37,7 @@ const FormModal: React.FC<FormModalProps> = ({
       
       // Add integrity check for security
       script.addEventListener('error', () => {
-        console.error('Failed to load form script');
+        // TODO: handle form script load failure
       });
       
       document.body.appendChild(script);

@@ -24,7 +24,7 @@ export const usePrefersReducedMotion = (): boolean => {
       mediaQuery.addEventListener('change', handleChange);
     } else {
       // Fallback for older browsers
-      mediaQuery.addListener(handleChange as any);
+      mediaQuery.addListener(handleChange);
     }
 
     // Cleanup
@@ -33,7 +33,7 @@ export const usePrefersReducedMotion = (): boolean => {
         mediaQuery.removeEventListener('change', handleChange);
       } else {
         // Fallback for older browsers
-        mediaQuery.removeListener(handleChange as any);
+        mediaQuery.removeListener(handleChange);
       }
     };
   }, []);

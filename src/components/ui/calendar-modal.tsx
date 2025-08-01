@@ -29,7 +29,7 @@ const CalendarModal: React.FC<CalendarModalProps> = ({ isOpen, onClose }) => {
       
       // Add error handling
       script.addEventListener('error', () => {
-        console.error('Failed to load calendar script');
+        // TODO: handle calendar script load failure
       });
       
       document.body.appendChild(script);

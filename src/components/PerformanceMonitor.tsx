@@ -38,10 +38,11 @@ export function PerformanceMonitor() {
                      rating === 'needs-improvement' ? 'color: orange' : 
                      rating === 'poor' ? 'color: red' : 'color: gray';
         
-        console.log(
-          `%c[${metric.name}] ${value}ms (${rating})`,
-          color
-        );
+        // Log metric in development for debugging
+        if (process.env.NODE_ENV === 'development') {
+           
+          console.info(`[%c${metric.name}] ${value}ms (${rating})`, color);
+        }
         
         // In production, send to analytics
         if (process.env.NODE_ENV === 'production' && window.gtag) {
