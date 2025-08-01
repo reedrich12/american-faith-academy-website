@@ -80,8 +80,8 @@ export const useForm = <T extends FormData = FormData>({
         if (handler) {
           await handler(values);
         }
-      } catch (error) {
-        console.error('Form submission error:', error);
+      } catch (_error) {
+        // TODO: handle form submission error
       } finally {
         setIsSubmitting(false);
       }
@@ -153,7 +153,7 @@ export const useMediaQuery = (query: string): boolean => {
       media.addEventListener('change', listener);
     } else {
       // Fallback for older browsers
-      media.addListener(listener as any);
+      media.addListener(listener);
     }
 
     // Cleanup
@@ -162,7 +162,7 @@ export const useMediaQuery = (query: string): boolean => {
         media.removeEventListener('change', listener);
       } else {
         // Fallback for older browsers
-        media.removeListener(listener as any);
+        media.removeListener(listener);
       }
     };
   }, [query]);
@@ -208,8 +208,7 @@ export const useLocalStorage = <T>(
     try {
       const item = window.localStorage.getItem(key);
       return item ? (JSON.parse(item) as T) : initialValue;
-    } catch (error) {
-      console.warn(`Error reading localStorage key "${key}":`, error);
+    } catch (_error) {
       return initialValue;
     }
   }, [initialValue, key]);
@@ -220,9 +219,7 @@ export const useLocalStorage = <T>(
   const setValue = useCallback((value: SetValue<T>) => {
     // Prevent build error "window is undefined"
     if (typeof window === 'undefined') {
-      console.warn(
-        `Tried setting localStorage key "${key}" even though environment is not a browser`
-      );
+      // Skip in non-browser environments
       return;
     }
 
@@ -238,8 +235,8 @@ export const useLocalStorage = <T>(
 
       // We dispatch a custom event so every useLocalStorage hook are notified
       window.dispatchEvent(new Event('local-storage'));
-    } catch (error) {
-      console.warn(`Error setting localStorage key "${key}":`, error);
+    } catch (_error) {
+      // Ignore write errors
     }
   }, [key, storedValue]);
 
@@ -290,7 +287,7 @@ export const usePrefersReducedMotion = (): boolean => {
       mediaQuery.addEventListener('change', handleChange);
     } else {
       // Fallback for older browsers
-      mediaQuery.addListener(handleChange as any);
+      mediaQuery.addListener(handleChange);
     }
 
     // Cleanup
@@ -299,10 +296,12 @@ export const usePrefersReducedMotion = (): boolean => {
         mediaQuery.removeEventListener('change', handleChange);
       } else {
         // Fallback for older browsers
-        mediaQuery.removeListener(handleChange as any);
+        mediaQuery.removeListener(handleChange);
       }
     };
   }, []);
 
   return prefersReducedMotion;
 };
+
+export * from './useGettingStarted';
