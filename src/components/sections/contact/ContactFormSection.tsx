@@ -52,12 +52,10 @@ const ContactFormSection: React.FC = () => {
     try {
       const url = new URL(scriptSrc);
       if (!allowedDomains.includes(url.hostname)) {
-        console.error('Blocked unauthorized script domain');
         setScriptError(true);
         return;
       }
     } catch (error) {
-      console.error('Invalid script URL');
       setScriptError(true);
       return;
     }
@@ -68,12 +66,10 @@ const ContactFormSection: React.FC = () => {
     script.async = true;
     
     script.onload = () => {
-      console.log('GoHighLevel form script loaded successfully');
       setScriptsLoaded(true);
     };
     
     script.onerror = () => {
-      console.error('Failed to load GoHighLevel form script');
       setScriptError(true);
     };
     

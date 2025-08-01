@@ -17,8 +17,7 @@ export default function Error({
   const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
-    // Log the error to an error reporting service
-    console.error('Application error:', error);
+    // TODO: integrate with error reporting service
   }, [error]);
 
   return (
