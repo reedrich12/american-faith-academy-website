@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import AnimatedSection from '@/components/ui/animated-section';
 import { Card, CardContent } from '@/components/ui/card';
+import Image from 'next/image';
 import { Church, Briefcase, CheckCircle2, Users, Target, Heart, TrendingUp, LucideIcon } from 'lucide-react';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
@@ -131,9 +132,11 @@ const TwoPathsSection = () => {
               aria-label="Church partnership path - Transform your ministry impact"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 to-blue-950/80 z-10" />
-              <img 
-                src="/api/placeholder/600/400" 
-                alt="Church building with families" 
+              <Image
+                src="/api/placeholder/600/400"
+                alt="Church building with families"
+                width={600}
+                height={400}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 z-20 flex flex-col justify-center items-center text-white p-8">
@@ -160,9 +163,11 @@ const TwoPathsSection = () => {
               aria-label="Edupreneur path - Build your education business"
             >
               <div className="absolute inset-0 bg-gradient-to-br from-red-700/80 to-red-800/80 z-10" />
-              <img 
-                src="/api/placeholder/600/400" 
-                alt="Professional educator with students" 
+              <Image
+                src="/api/placeholder/600/400"
+                alt="Professional educator with students"
+                width={600}
+                height={400}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 z-20 flex flex-col justify-center items-center text-white p-8">

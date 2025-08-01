@@ -102,13 +102,14 @@ export default function NotFound() {
                   animate={{ y: 0, opacity: 1 }}
                   transition={prefersReducedMotion ? {} : { duration: 0.3, delay: 0.3 + index * 0.1 }}
                 >
-                  <Link href={link.href} passHref legacyBehavior>
-                    <a className="flex flex-col items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 group focus:ring-2 focus:ring-offset-2 focus:ring-patriot">
-                      <link.icon className="w-8 h-8 text-gray-400 group-hover:text-patriot transition-colors mb-2" aria-hidden="true" />
-                      <span className="text-sm text-gray-700 group-hover:text-patriot transition-colors">
-                        {link.label}
-                      </span>
-                    </a>
+                  <Link
+                    href={link.href}
+                    className="flex flex-col items-center p-4 bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 group focus:ring-2 focus:ring-offset-2 focus:ring-patriot"
+                  >
+                    <link.icon className="w-8 h-8 text-gray-400 group-hover:text-patriot transition-colors mb-2" aria-hidden="true" />
+                    <span className="text-sm text-gray-700 group-hover:text-patriot transition-colors">
+                      {link.label}
+                    </span>
                   </Link>
                 </motion.div>
               ))}

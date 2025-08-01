@@ -80,7 +80,7 @@ export const useForm = <T extends FormData = FormData>({
         if (handler) {
           await handler(values);
         }
-      } catch (error) {
+      } catch (_error) {
         // TODO: handle form submission error
       } finally {
         setIsSubmitting(false);
@@ -208,7 +208,7 @@ export const useLocalStorage = <T>(
     try {
       const item = window.localStorage.getItem(key);
       return item ? (JSON.parse(item) as T) : initialValue;
-    } catch (error) {
+    } catch (_error) {
       return initialValue;
     }
   }, [initialValue, key]);
@@ -235,7 +235,7 @@ export const useLocalStorage = <T>(
 
       // We dispatch a custom event so every useLocalStorage hook are notified
       window.dispatchEvent(new Event('local-storage'));
-    } catch (error) {
+    } catch (_error) {
       // Ignore write errors
     }
   }, [key, storedValue]);
@@ -303,3 +303,5 @@ export const usePrefersReducedMotion = (): boolean => {
 
   return prefersReducedMotion;
 };
+
+export * from './useGettingStarted';
