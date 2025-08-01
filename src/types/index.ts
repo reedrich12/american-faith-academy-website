@@ -122,7 +122,7 @@ export interface FormField {
 // API Response Types
 // ========================================
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = unknown> {
   success: boolean;
   data?: T;
   error?: {
@@ -143,9 +143,9 @@ export interface ContactFormResponse {
 // ========================================
 
 export interface AnimationConfig {
-  initial?: Record<string, any>;
-  animate?: Record<string, any>;
-  exit?: Record<string, any>;
+  initial?: Record<string, unknown>;
+  animate?: Record<string, unknown>;
+  exit?: Record<string, unknown>;
   transition?: {
     duration?: number;
     delay?: number;
@@ -153,9 +153,9 @@ export interface AnimationConfig {
     repeat?: number;
     repeatType?: 'loop' | 'reverse' | 'mirror';
   };
-  whileHover?: Record<string, any>;
-  whileTap?: Record<string, any>;
-  whileInView?: Record<string, any>;
+  whileHover?: Record<string, unknown>;
+  whileTap?: Record<string, unknown>;
+  whileInView?: Record<string, unknown>;
   viewport?: {
     once?: boolean;
     amount?: number | 'all' | 'some';
@@ -205,7 +205,7 @@ export type DeepPartial<T> = {
 };
 
 // Extract props type from a component
-export type PropsOf<C extends React.ComponentType<any>> = 
+export type PropsOf<C extends React.ComponentType<unknown>> =
   C extends React.ComponentType<infer P> ? P : never;
 
 // Ensure at least one property is provided
