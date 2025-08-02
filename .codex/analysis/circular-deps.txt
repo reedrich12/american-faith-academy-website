@@ -1,5 +1,3 @@
-- Finding files
-Processed 65 files (2s) (62 warnings)
+Processed 65 files (1.5s) (47 warnings)
 
-✔ No circular dependency found!
 
