@@ -3,7 +3,7 @@ import SoarFrameworkDeepDive from '@/components/sections/academics/SoarFramework
 import ClassicalVsModernSection from '@/components/sections/academics/ClassicalVsModernSection';
 import CurriculumByLevelSection from '@/components/sections/academics/CurriculumByLevelSection';
 import OmnibusApproachSection from '@/components/sections/academics/OmnibusApproachSection';
-import TechnologyIntegrationSection from '@/components/sections/academics/TechnologyIntegrationSection';
+import TechnologyIntegrationSection from '@/components/sections/academics/technology-integration/TechnologyIntegrationSection';
 
 export default function AcademicsPage() {
   return (
