@@ -28,34 +28,34 @@ const Footer = () => {
             </p>
             <div className="flex space-x-4">
               {/* FIXED: Added aria-labels for all social media links */}
-              <a 
-                href="#" 
+              <Link
+                href="/"
                 className="text-gray-300 hover:text-patriot transition-colors focus:outline-none focus:ring-2 focus:ring-patriot focus:ring-offset-2 focus:ring-offset-navy rounded"
                 aria-label="Visit American Faith Academy on Facebook"
               >
                 <Facebook className="h-5 w-5" aria-hidden="true" />
-              </a>
-              <a 
-                href="#" 
+              </Link>
+              <Link
+                href="/"
                 className="text-gray-300 hover:text-patriot transition-colors focus:outline-none focus:ring-2 focus:ring-patriot focus:ring-offset-2 focus:ring-offset-navy rounded"
                 aria-label="Visit American Faith Academy on Twitter"
               >
                 <Twitter className="h-5 w-5" aria-hidden="true" />
-              </a>
-              <a 
-                href="#" 
+              </Link>
+              <Link
+                href="/"
                 className="text-gray-300 hover:text-patriot transition-colors focus:outline-none focus:ring-2 focus:ring-patriot focus:ring-offset-2 focus:ring-offset-navy rounded"
                 aria-label="Visit American Faith Academy on Instagram"
               >
                 <Instagram className="h-5 w-5" aria-hidden="true" />
-              </a>
-              <a 
-                href="#" 
+              </Link>
+              <Link
+                href="/"
                 className="text-gray-300 hover:text-patriot transition-colors focus:outline-none focus:ring-2 focus:ring-patriot focus:ring-offset-2 focus:ring-offset-navy rounded"
                 aria-label="Visit American Faith Academy on YouTube"
               >
                 <Youtube className="h-5 w-5" aria-hidden="true" />
-              </a>
+              </Link>
             </div>
           </div>
 

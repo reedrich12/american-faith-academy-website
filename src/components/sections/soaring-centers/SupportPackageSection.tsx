@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import AnimatedSection from '@/components/ui/animated-section';
-import { Card, CardContent } from '@/components/ui/card';
+
 import { ChevronDown, CheckCircle, Sparkles, Users, LineChart, Shield, Laptop, Award, MessageSquare, Calendar, FileText, Palette, Globe, BookOpen, Briefcase, LucideIcon } from 'lucide-react';
 import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
 
@@ -250,7 +250,6 @@ const SupportPackageSection = () => {
               onClick={() => toggleCard(index)}
               onKeyDown={(e) => handleKeydown(e, index)}
               tabIndex={0}
-              aria-expanded={expandedCards.has(index)}
               aria-label={`${pillar.title} support details`}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
