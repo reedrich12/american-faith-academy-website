@@ -1,6 +1,6 @@
 import SoaringCentersHeroSection from '@/components/sections/soaring-centers/SoaringCentersHeroSection';
 import TwoPathsSection from '@/components/sections/soaring-centers/two-paths/TwoPathsSection';
-import SupportPackageSection from '@/components/sections/soaring-centers/SupportPackageSection';
+import SupportPackageSection from '@/components/sections/soaring-centers/support-package/SupportPackageSection';
 import MarketOpportunitySection from '@/components/sections/soaring-centers/market-opportunity/MarketOpportunitySection';
 import GettingStartedSection from '@/components/sections/soaring-centers/GettingStartedSection';
 
