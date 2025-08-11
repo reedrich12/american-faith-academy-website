@@ -154,6 +154,7 @@ const SoarFrameworkSection: React.FC = () => {
                 className="w-32 h-32 bg-gradient-to-r from-navy-500 to-patriot-500 rounded-full flex items-center justify-center shadow-2xl"
                 animate={pulseAnimation}
                 transition={{ duration: 2, repeat: Infinity }}
+                role="img"
                 aria-label="S.O.A.R. - Solid foundation, Optimized by technology, Action-oriented faith, Ready for impact"
               >
                 <span className="text-white font-serif font-bold text-3xl" aria-hidden="true">S.O.A.R.</span>
@@ -278,6 +279,7 @@ const SoarFrameworkSection: React.FC = () => {
                 className="w-32 h-32 bg-gradient-to-r from-navy-500 to-patriot-500 rounded-full flex items-center justify-center shadow-2xl"
                 animate={pulseAnimation}
                 transition={{ duration: 2, repeat: Infinity }}
+                role="img"
                 aria-label="S.O.A.R. - Solid foundation, Optimized by technology, Action-oriented faith, Ready for impact"
               >
                 <span className="text-white font-serif font-bold text-3xl" aria-hidden="true">S.O.A.R.</span>

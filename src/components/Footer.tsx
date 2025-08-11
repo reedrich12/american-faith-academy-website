@@ -61,7 +61,7 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-semibold text-lg mb-4 text-patriot">Quick Links</h4>
+            <h4 className="font-semibold text-lg mb-4 text-white">Quick Links</h4>
             <ul className="space-y-2">
               <li><Link href="/about" className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-patriot focus:ring-offset-2 focus:ring-offset-navy rounded">About Us</Link></li>
               <li><Link href="/academics" className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-patriot focus:ring-offset-2 focus:ring-offset-navy rounded">Academics</Link></li>
@@ -73,7 +73,7 @@ const Footer = () => {
 
           {/* Programs */}
           <div>
-            <h4 className="font-semibold text-lg mb-4 text-patriot">Programs</h4>
+            <h4 className="font-semibold text-lg mb-4 text-white">Programs</h4>
             <ul className="space-y-2">
               <li><button type="button" className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-patriot focus:ring-offset-2 focus:ring-offset-navy rounded">Solo Flights (Online)</button></li>
               <li><button type="button" className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-patriot focus:ring-offset-2 focus:ring-offset-navy rounded">Soaring Centers</button></li>
@@ -85,10 +85,10 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div>
-            <h4 className="font-semibold text-lg mb-4 text-patriot">Contact Info</h4>
+            <h4 className="font-semibold text-lg mb-4 text-white">Contact Info</h4>
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-patriot flex-shrink-0" aria-hidden="true" />
+                <Phone className="h-4 w-4 text-white flex-shrink-0" aria-hidden="true" />
                 <a 
                   href="tel:279-263-9627" 
                   className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-patriot focus:ring-offset-2 focus:ring-offset-navy rounded"
@@ -98,7 +98,7 @@ const Footer = () => {
                 </a>
               </div>
               <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-patriot flex-shrink-0" aria-hidden="true" />
+                <Mail className="h-4 w-4 text-white flex-shrink-0" aria-hidden="true" />
                 <a 
                   href="mailto:admin@americanfaithacademy.org" 
                   className="text-gray-300 hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-patriot focus:ring-offset-2 focus:ring-offset-navy rounded"
@@ -108,7 +108,7 @@ const Footer = () => {
                 </a>
               </div>
               <div className="flex items-start space-x-3">
-                <MapPin className="h-4 w-4 text-patriot mt-1 flex-shrink-0" aria-hidden="true" />
+                <MapPin className="h-4 w-4 text-white mt-1 flex-shrink-0" aria-hidden="true" />
                 <address className="text-gray-300 not-italic">
                   123 Education Way<br />
                   Faith City, FC 12345

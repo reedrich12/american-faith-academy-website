@@ -5,7 +5,7 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "American Faith Academy - Where Minds Soar and Faith Takes Flight",
+  title: "American Faith Academy - Where Minds & Faith Soar",
   description: "Uniting Classic Wisdom, Modern Technology, and an Enduring Community for Lasting Impact. Classical Christian education with adaptive technology.",
   keywords: "classical education, Christian school, online learning, faith-based education, homeschool, ESA funding",
 };
