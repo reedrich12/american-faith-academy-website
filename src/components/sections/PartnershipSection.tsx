@@ -120,10 +120,10 @@ const PartnershipSection: React.FC = () => {
   ];
 
   const statistics: Statistic[] = [
-    { number: "50+", label: "Soaring Centers", icon: Building2 },
-    { number: "2,500+", label: "Students Served", icon: Users },
-    { number: "95%", label: "Partner Satisfaction", icon: Heart },
-    { number: "25%", label: "Annual Growth", icon: TrendingUp }
+    { number: "Nationwide", label: "K-12 Programs", icon: Building2 },
+    { number: "1-5 Days", label: "Flexible Options", icon: Users },
+    { number: "Year-Round", label: "Enrollment Open", icon: Heart },
+    { number: "100%", label: "Faith-Centered", icon: TrendingUp }
   ];
 
   const benefitVariants = {

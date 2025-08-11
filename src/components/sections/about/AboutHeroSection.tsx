@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { Users, BookOpen, Heart, Target, LucideIcon } from 'lucide-react';
+import { MapPin, CalendarDays, Heart, Target, LucideIcon } from 'lucide-react';
 import AnimatedSection from '@/components/ui/animated-section';
 import BaseHeroSection from '@/components/sections/BaseHeroSection';
 import { usePrefersReducedMotion } from '@/hooks';
@@ -19,22 +19,22 @@ const AboutHeroSection: React.FC = () => {
 
   const statistics: Statistic[] = [
     {
-      icon: Users,
-      value: "2,500+",
-      label: "Students Served",
-      description: "Across our growing network"
-    },
-    {
-      icon: BookOpen,
-      value: "50+",
-      label: "Soaring Centers",
-      description: "In communities nationwide"
+      icon: MapPin,
+      value: "Nationwide",
+      label: "K-12 Programs",
+      description: "Students accepted from all 50 states"
     },
     {
       icon: Heart,
-      value: "95%",
-      label: "Family Satisfaction",
-      description: "Based on annual surveys"
+      value: "Online or 1-5 Day",
+      label: "Flexible Paths",
+      description: "Soaring Center options plus full Online Academy"
+    },
+    {
+      icon: CalendarDays,
+      value: "Year-Round",
+      label: "Rolling Admissions",
+      description: "Mid-year starts available based on capacity"
     },
     {
       icon: Target,

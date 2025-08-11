@@ -7,7 +7,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { CheckCircle, Clock, Users, DollarSign, LucideIcon } from 'lucide-react';
 import AnimatedSection from '@/components/ui/animated-section';
 import BaseHeroSection from '@/components/sections/BaseHeroSection';
-import Link from 'next/link';
 import FormModal from '@/components/ui/form-modal';
 import CalendarModal from '@/components/ui/calendar-modal';
 import { usePrefersReducedMotion } from '@/hooks';
@@ -52,9 +51,9 @@ const AdmissionsHeroSection: React.FC = () => {
   ];
 
   const trustStats: TrustStat[] = [
-    { number: "95%", label: "Family Satisfaction" },
+    { number: "K-12", label: "All Grade Levels" },
     { number: "48hrs", label: "Response Time" },
-    { number: "100%", label: "Support Guarantee" },
+    { number: "Year-Round", label: "Enrollment Open" },
     { number: "$0", label: "Application Fee" }
   ];
 
