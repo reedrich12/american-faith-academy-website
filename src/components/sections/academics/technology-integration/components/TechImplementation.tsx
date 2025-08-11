@@ -2,8 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import AnimatedSection from '@/components/ui/animated-section';
-import { Shield, Play } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Shield } from 'lucide-react';
 import type { TechImplementation } from '../types';
 
 interface TechImplementationProps {
@@ -71,32 +70,6 @@ export function TechImplementation({ steps, prefersReducedMotion }: TechImplemen
         </Card>
       </AnimatedSection>
 
-      {/* CTA */}
-      <AnimatedSection delay={1} className="text-center">
-        <div className="bg-white rounded-2xl p-8 shadow-lg max-w-3xl mx-auto">
-          <h3 className="font-serif text-2xl font-bold text-navy mb-4">
-            See Personalized Learning in Action
-          </h3>
-          <p className="text-lg text-gray-600 mb-6">
-            Watch how our technology adapts to different learning styles and paces
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              className="bg-patriot hover:bg-patriot-600 text-white px-8 py-4 text-lg font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 focus:ring-2 focus:ring-offset-2 focus:ring-patriot-500 flex items-center justify-center"
-              aria-label="Watch a demo video of our personalized learning technology"
-            >
-              <Play className="w-5 h-5 mr-2" aria-hidden="true" />
-              Watch Demo Video
-            </Button>
-            <Button
-              className="border-2 border-navy text-navy hover:bg-navy hover:text-white px-8 py-4 text-lg font-semibold rounded-lg transition-all duration-300 focus:ring-2 focus:ring-offset-2 focus:ring-navy"
-              aria-label="Request a free trial of our adaptive learning platform"
-            >
-              Request Free Trial
-            </Button>
-          </div>
-        </div>
-      </AnimatedSection>
     </>
   );
 }
